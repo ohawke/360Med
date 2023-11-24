@@ -9,19 +9,57 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="dashboard.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> 
 </head>
 <body>
     <header id="navigation">
         <a class="logo">
             <img id="logo" src="logo.png" alt="360Med"></img>
         </a>
+        <div class="search">
+            <input id="search" type="text" placeholder="Search...">
+            <button id="search_btn">Search</button>
+        </div>
         <a class="account" href="login.html">
             <img id = "account_icn"src="account icon.png" alt="account icon"></img>
             <p id="account" class="hoverEffect">Login</p>
         </a>
     </header>
     <main>
-        <h1>Welcome to 360Med</h1>
+        <h3 class="label">Heart Disease > TMVR</h3>
+        <div class="selection">
+            <img id="bar" src="bar.png" alt="bar chart">
+            <img id="pie" src="pie.png" alt="pie chart">
+            <img id="line" src="line.png" alt="line chart">
+            <img id="map" src="map.png" alt="map">
+        </div>
+        <div class="main_vis">
+            <canvas id="myChart" style="width:80vh;max-width:80vw"></canvas>
+            <script>
+                const xValues = ["2018", "2019", "2020", "2021", "2022"];
+                const yValues = [55, 49, 44, 24, 15];
+                const barColors = ["red", "green","blue","orange","brown"];
+
+                new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    title: {
+                    display: true,
+                    text: "Mortality of TAVR from 2018 to 2022"
+                    }
+                }
+                });
+            </script>
+        </div>
     </main>  
     <footer>
         <a class="logo">
