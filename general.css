@@ -1,0 +1,128 @@
+/* @import url('general.css'); */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+body {
+    background-color: #FFF;
+    display: grid;
+    grid-template-rows: 8vh auto;
+}
+header {
+    grid-row: 1 / 2;
+    background-color: #FFF;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    border-color: #6FB3B8;
+    border-width: 2px;
+    border-style: none none solid none;
+}
+    header #logo {
+        grid-column: 5 / 10;
+        margin: auto;
+        height: 4vw;
+        width: auto;
+        margin: 0vh 4vw;
+    }
+    header .search {
+        grid-column: 10 / 19;
+        margin: 0;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+    header #search {
+        font-size: 1vw;
+        width: 25vw;
+        height: 4vh;
+        padding: 0.1vw 0.5vw;
+        border-radius: 12px;
+        border-color: #6FB3B8;
+        border-width: 1px;
+    }
+    header #search_btn {
+        font-size: 1vw;
+        background-color: #6FB3B8;
+        padding: 0.3vw 0.3vw;
+        margin-left: 1vw;
+        border-radius: 12px;
+        border-color: #6FB3B8;
+        color: black;
+    }
+    header .account {
+        grid-column: 20 / 21;
+        display: flex;
+        margin: auto;
+        text-decoration: none;
+        margin: 0vh 4vw;
+    }
+    header #account_icn {
+        height: 2vw;
+        width: auto;
+        padding-right: 3px;
+        margin: auto;
+    }
+    header #account, #account:visited {
+        margin: auto;
+        color: #000;
+        font-size: 1.3vw;
+        font-weight: bold;
+        opacity: 0.5;
+        padding-top: 3px;
+    }
+    #account:hover, #account:active {
+        opacity: 1;
+        text-decoration: underline;
+    }
+main {
+    grid-row: 2 / 3;
+    background-color: #FFF;
+    margin: 5vh, 4vw;
+}
+    h1 {
+        font-size: 4vw;
+        margin-bottom: 2vh;
+    }
+    h3 {
+        font-size: 3vw;
+        margin-top: 2vh;
+    }
+footer {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    border-color: #6FB3B8;
+    border-width: 2px;
+    border-style: solid none none none;
+    font-size: 1.3vw;
+    padding-top: 2vh;
+}
+    footer #logo {
+        grid-column: 5 / 8;
+        padding-left: 4vw;
+        margin: auto;
+        height: 3vw;
+        width: auto;
+    }
+    footer #about {
+        grid-column: 9 / 10;
+        margin: auto;
+    }
+    footer #team {
+        grid-column: 11 / 12;
+        margin: auto;
+    }
+    footer #contact {
+        grid-column: 13 / 14;
+        margin: auto;
+    }
+    footer #help {
+        grid-column: 15 / 16;
+        margin: auto;
+    }
+    footer p {
+        grid-column: 17 / 21;
+        font-size: 0.6vw;
+        margin: auto;
+        padding-right: 4vw;
+    }
