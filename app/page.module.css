@@ -4,7 +4,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #FFF;
     display: grid;
-    grid-template-rows: 7vh 4vh 89vh 8vh;
+    grid-template-rows: 7vh 4vh auto 8vh;
 }
 .header {
     grid-row: 1 / 2;
