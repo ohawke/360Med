@@ -23,12 +23,12 @@ ChartJS.register(
 );
 
 export default function Home() {
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const labels = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
   const [data, setData] = useState({
     labels: labels,
     datasets: [{
-      label: 'Expenses by Month',
-      data: [65, 59, 80, 81, 56, 55, 40],
+      label: 'Mortality by Year',
+      data: [65, 59, 80, 81, 56, 65, 59, 80, 81, 56],
       backgroundColor: [
         'rgb(153, 102, 255)'
       ],
@@ -52,7 +52,6 @@ export default function Home() {
         </a>
         <div className={styles.search}>
           <input id={styles.search} type="text" placeholder="Search..."></input>
-          {/* <button id={styles.search_btn}>&#x1f50d;</button> */}
           <button id={styles.search_btn}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
@@ -61,25 +60,51 @@ export default function Home() {
       </div>
       <br></br>
       <div className={styles.filter}>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}>&#65125;</button>
-          <button className={styles.f_btn}> ? </button>
+          <div className={styles.f_btn} id={styles.f_label}>Filter</div>
+          <select className={styles.f_btn} name="chart_type">
+            <option value="" disabled selected>Chart Type</option>
+            <option value="bar">Bar Graph</option>
+            <option value="line">Line Graph</option>
+            <option value="pie">Pie Chart</option>
+            <option value="map">Heat Map</option>
+          </select>
+          {/* <div><button className={styles.f_btn} id={styles.collapse}>Range</button>
+            <div className={styles.f_content}>x</div>
+            <div className={styles.f_content}>y</div>
+          </div> */}
+          <select className={styles.f_btn}>
+            <option value="" disabled selected>Range</option>
+          </select>
+          <select className={styles.f_btn}>
+            <option>Option 2</option>
+          </select>
+          <select className={styles.f_btn}>
+            <option>Option 3</option>
+          </select>
+          <select className={styles.f_btn}>
+            <option>Option 4</option>
+          </select>
+          <select className={styles.f_btn}>
+            <option>Option 5</option>
+          </select>
+          <select className={styles.f_btn}>
+            <option>Option 6</option>
+          </select>
+          <select className={styles.f_btn}>
+            <option>Option 7</option>
+          </select>
+          <select className={styles.f_btn}>
+            <option>Option 8</option>
+          </select>
         </div>
       <div className={styles.main}>
-        <Bar data={data} id={styles.vis}/>
+        <h1 className={styles.h1}>Mortality Rate of TAVR from 2013 to 2022</h1>
+        <Bar 
+          data={data} 
+          id={styles.vis}
+          height={140}
+          width={300}
+          />
       </div>
       <div className={styles.footer}>
         <a className={styles.logo}>
