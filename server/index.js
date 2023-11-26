@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config()
 const cpt = require("./routes/cpt.js");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5050;
 const app = express();
 
 app.use(cors());

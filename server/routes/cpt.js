@@ -1,24 +1,29 @@
 const express = require('express');
-const db = require('../db/conn.js');
+//const db = require('../db/conn.js');
 const axios = require('axios');
-const url = require('url');
+require('dotenv').config()
 const {ObjectId} = require('mongodb')
+const {MongoClient} = require('mongodb');
+const URI = process.env.ATLAS_URI || "";
+let client;
 
 const router = express.Router();
 
 // Get a list of 50 codes
 router.get("/", async (req, res) => {
-  let collection = await db.collection("cpt");
-  let results = await collection.find({})
+  client = new MongoClient(URI, { useNewUrlParser: true });
+  const cursor = await client.db("med-data").collection("cpt");
+  let results = await cursor.find({})
     .limit(10)
     .toArray();
-
+  client.close();
   res.send(results).status(200);
 });
 
 // search cpt codes
 router.get("/search", async (req, res) => {
-    let collection = await db.collection("cpt");
+    client = new MongoClient(URI, { useNewUrlParser: true });
+    const cursor = await client.db("med-data").collection("cpt");
     let query = {};    
     for(var key in req.body){ 
     req.body[key] !== "" ? query[key] = req.body[key] : null;
@@ -27,19 +32,22 @@ router.get("/search", async (req, res) => {
     const result = [];
     for (var code in codeList) {
         let finalQuery = Object.assign({"CPT/HCPCS Code": code['ui']}, query);
-        let hit = await collection.find(finalQuery);
+        let hit = await cursor.find(finalQuery);
         result.push(hit);
     }
+    await client.close();
     if (!result) res.send("Not found").status(404);
     else res.send(result).status(200);
   });
 
 // Get a single code by id
 router.get("/:id", async (req, res) => {
-  let collection = await db.collection("cpt");
+  client = new MongoClient(URI, { useNewUrlParser: true });
+  const cursor = await client.db("med-data").collection("cpt");
   let query = {_id: ObjectId(req.params.id)};
-  let result = await collection.findOne(query);
-
+  let result = await cursor.findOne(query);
+  
+  await client.close();
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
 });
@@ -58,4 +66,4 @@ async function convertToCPT(search) {
     return response.json();
 }
 
-export default router;
+module.exports = router;
