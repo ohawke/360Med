@@ -1,5 +1,7 @@
 const express = require('express');
-const db = require("../db/conn.mjs");
+const db = require('../db/conn.js');
+const axios = require('axios');
+const url = require('url');
 const {ObjectId} = require('mongodb')
 
 const router = express.Router();
@@ -17,14 +19,17 @@ router.get("/", async (req, res) => {
 // search cpt codes
 router.get("/search", async (req, res) => {
     let collection = await db.collection("cpt");
-    let query = {};
+    let query = {};    
     for(var key in req.body){ 
     req.body[key] !== "" ? query[key] = req.body[key] : null;
     }
-    let result = await collection.find(query)
-        .limit(10)
-        .toArray();
-  
+    let codeList = await convertToCPT(req.body['search'])['result'][0]['results'];
+    const result = [];
+    for (var code in codeList) {
+        let finalQuery = Object.assign({"CPT/HCPCS Code": code['ui']}, query);
+        let hit = await collection.find(finalQuery);
+        result.push(hit);
+    }
     if (!result) res.send("Not found").status(404);
     else res.send(result).status(200);
   });
@@ -38,5 +43,19 @@ router.get("/:id", async (req, res) => {
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
 });
+
+async function convertToCPT(search) {
+    const response = axios({
+        method: "get",
+        url: 'https://uts-ws.nlm.nih.gov/rest/search/current',
+        params: {
+            string: search,
+            apiKey: process.env.THES_KEY,
+            sabs: 'CPT',
+            returnIdType:'code'
+        },
+      });
+    return response.json();
+}
 
 export default router;
