@@ -1,94 +1,101 @@
+"use client";
 import Image from 'next/image'
 import styles from './page.module.css'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { useState } from 'react';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function Home() {
+  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const [data, setData] = useState({
+    labels: labels,
+    datasets: [{
+      label: 'Expenses by Month',
+      data: [65, 59, 80, 81, 56, 55, 40],
+      backgroundColor: [
+        'rgb(153, 102, 255)'
+      ],
+      borderColor: [
+        'rgb(153, 102, 255)'
+      ],
+      borderWidth: 1
+    }]
+  });
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className={styles.body}>
+      <div className={styles.header}>
+        <a className={styles.logo_img}>
+          <Image
+            src="/logo.png" 
+            alt="360Med"
+            id={styles.logo_img} 
+            width={110}
+            height={40}
+          ></Image>
+        </a>
+        <div className={styles.search}>
+          <input id={styles.search} type="text" placeholder="Search..."></input>
+          {/* <button id={styles.search_btn}>&#x1f50d;</button> */}
+          <button id={styles.search_btn}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
+        <a className={styles.account} href="login.html">
+          <button id={styles.account} className={styles.hoverEffect}>Logout</button>
+        </a>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <br></br>
+      <div className={styles.filter}>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}>&#65125;</button>
+          <button className={styles.f_btn}> ? </button>
+        </div>
+      <div className={styles.main}>
+        <Bar data={data} id={styles.vis}/>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
+      <div className={styles.footer}>
+        <a className={styles.logo}>
+          <Image
+            src="/logo.png" 
+            alt="360Med"
+            id={styles.logo}
+            width={110}
+            height={40}
+          ></Image>
         </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        <a id={styles.about}>About</a>
+        <a id={styles.team}>Team</a>
+        <a id={styles.contact}>Contact</a>
+        <a id={styles.help}>Help</a>
+        <p id={styles.copyright}>Copyright©2023 360Med</p>
       </div>
     </main>
   )
