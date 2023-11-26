@@ -11,4 +11,4 @@ try {
 
 let db = conn.db("med-data");
 
-module.exports = {db};
+module.exports = db;
