@@ -1,0 +1,222 @@
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Objects;
+import java.util.Scanner;
+public class ClinicalTrials {
+    public static void main(String[] args) throws ArrayIndexOutOfBoundsException {
+        try {
+            boolean searchTrialAgain = true;
+            while (searchTrialAgain) {
+                Scanner query = new Scanner(System.in);
+                String fields = "";
+                System.out.println("Search active medical trials: ");
+                String input = query.nextLine();
+                input = input.replaceAll("\\s+", "+");
+                String newString = APIrequest(fields, input);
+                newString = cleanData(newString);
+                String[] lines = newString.split("\n");
+                printData(lines, "");
+                printFieldsList();
+                System.out.println("Enter the field you would like to search for: ");
+                fields = query.nextLine();
+                newString = APIrequest(fields, input);
+                newString = cleanData(newString);
+                lines = newString.split("\n");
+                printData(lines, fields);
+                boolean searchFieldAgain = true;
+                while (searchFieldAgain) {
+                    System.out.println("Enter the field you would like to search for or enter EXIT: ");
+                    String again = query.nextLine();
+                    if (again.equalsIgnoreCase("EXIT")) {
+                        searchFieldAgain = false;
+                        System.out.println("EXITING");
+                        System.out.println("Would you like to search for a new trial(y/n)");
+                        String trialAgain = query.nextLine();
+                        if(trialAgain.equalsIgnoreCase("n")) {
+                            searchTrialAgain = false;
+                            System.out.println("EXITING");
+                        }
+                    } else {
+                        newString = APIrequest(again, input);
+                        newString = cleanData(newString);
+                        lines = newString.split("\n");
+                        printData(lines, again);
+                    }
+                }
+            }
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+    public static String APIrequest(String fields, String input) throws IOException {
+        try {
+            URL url;
+            if (!Objects.equals(fields, "")) {
+                url = new URL("https://classic.clinicaltrials.gov/api/query/study_fields?expr=" +
+                        input + "&fields=BriefTitle%2CCondition%2CBriefSummary%2C" + fields + "&min_rnk=1&max_rnk=1&fmt=xml");
+            } else {
+                url = new URL("https://classic.clinicaltrials.gov/api/query/study_fields?expr=" +
+                        input + "&fields=BriefTitle%2CCondition%2CBriefSummary%2CCentralContactEMail%2CCentralContactName%2CCentralContactPhone%2CCentralContactRole%2CLeadSponsorName%2CLocationCity%2CLocationCountry&min_rnk=1&max_rnk=10&fmt=xml");
+            }
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            StringBuilder informationString = new StringBuilder();
+            Scanner scanner = new Scanner(url.openStream());
+            while (scanner.hasNext()) {
+                informationString.append(scanner.nextLine() + "\n");
+            }
+            scanner.close();
+            String output = informationString.toString();
+            return output;
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return "Invalid request";
+    }
+    public static void printData(String[] lines, String fields) {
+
+        if(lines.length < 4) {
+            System.out.println("Error: lines array must have at least 4 elements");
+            return;
+        }
+        for (int i = 13; i < lines.length; i++) {
+
+            if (i >= lines.length - 1) {
+                break;
+            }
+
+            if (lines[i].contains("BriefSummary") || lines[i].contains("BriefTitle") || lines[i].contains(fields)) {
+
+                if (lines[i].contains("BriefTitle")) {
+                    System.out.print("Study Title: ");
+                } else if (lines[i].contains("BriefSummary")) {
+                    System.out.print("Study Summary: ");
+                }
+
+                try {
+                    String output = lines[i + 1];
+
+                    // print output in chunks
+                    if (output.length() > 170) {
+                        System.out.println(output.substring(0, 170));
+                        String substring = output.substring(170);
+
+                        if (substring.length() > 170) {
+                            System.out.println(substring.substring(0, 170));
+                            System.out.print(substring.substring(170) + "\n");
+                        } else {
+                            System.out.print(substring + "\n");
+                        }
+                    } else {
+                        System.out.println(lines[i + 1]);
+                    }
+
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Error printing output");
+                }
+            }
+        }
+        System.out.println("------------------------------------------------------------");
+    }
+    public static void printFieldsList() {
+        System.out.println("    BriefSummary " +
+                "    BriefTitle " +
+                "    CentralContactEMail " +
+                "    CentralContactName " +
+                "    CentralContactPhone\n" +
+                "    CentralContactRole " +
+                "    CollaboratorName " +
+                "    CompletionDate " +
+                "    CompletionDateType " +
+                "    Condition\n" +
+                "    ConditionAncestorId " +
+                "    ConditionAncestorTerm " +
+                "    ConditionBrowseBranchAbbrev " +
+                "    ConditionBrowseBranchName " +
+                "    DesignObservationalModel\n" +
+                "    DesignPrimaryPurpose " +
+                "    DesignTimePerspective " +
+                "    EligibilityCriteria " +
+                "    EnrollmentCount " +
+                "    EnrollmentType\n" +
+                "    EventGroupDeathsNumAffected " +
+                "    EventGroupDeathsNumAtRisk " +
+                "    ExpandedAccessNCTId " +
+                "    ExpandedAccessStatusForNCTId " +
+                "    FDAAA801Violation\n" +
+                "    Gender " +
+                "    GenderBased " +
+                "    GenderDescription " +
+                "    HasExpandedAccess " +
+                "    HealthyVolunteers\n" +
+                "    LargeDocUploadDate " +
+                "    LastKnownStatus " +
+                "    LastUpdatePostDate " +
+                "    LeadSponsorClass " +
+                "    LeadSponsorName\n" +
+                "    LocationCity " +
+                "    LocationContactEMail " +
+                "    LocationContactName " +
+                "    LocationContactPhone " +
+                "    LocationContactRole\n" +
+                "    LocationCountry " +
+                "    LocationFacility " +
+                "    LocationState " +
+                "    LocationStatus " +
+                "    LocationZip\n" +
+                "    MaximumAge " +
+                "    MinimumAge " +
+                "    OfficialTitle " +
+                "    PatientRegistry " +
+                "    Phase\n" +
+                "    PointOfContactEMail " +
+                "    PointOfContactOrganization " +
+                "    PointOfContactPhone " +
+                "    PointOfContactTitle " +
+                "    PrimaryCompletionDate\n" +
+                "    PrimaryCompletionDateType " +
+                "    PrimaryOutcomeDescription " +
+                "    PrimaryOutcomeMeasure " +
+                "    PrimaryOutcomeTimeFrame " +
+                "    SeriousEventAssessmentType\n" +
+                "    SeriousEventNotes " +
+                "    SeriousEventOrganSystem " +
+                "    SeriousEventSourceVocabulary " +
+                "    SeriousEventStatsGroupId " +
+                "    SeriousEventStatsNumAffected\n" +
+                "    SeriousEventStatsNumAtRisk " +
+                "    SeriousEventStatsNumEvents " +
+                "    SeriousEventTerm " +
+                "    StartDate " +
+                "    StudyPopulation\n" +
+                "    StudyType " +
+                "    SubmissionMCPReleaseN " +
+                "    WhyStopped ");
+        System.out.println("------------------------------------------------------------");
+
+    }
+    public static String cleanData(String rawData) {
+        rawData = rawData.replaceAll("<FieldValue>", "");
+        rawData = rawData.replaceAll("<Field>", "");
+        rawData = rawData.replaceAll("<FieldList>", "");
+        rawData = rawData.replaceAll("</FieldList>", "");
+        rawData = rawData.replaceAll("</FieldValue>", "");
+        rawData = rawData.replaceAll("</Field>", "");
+        rawData = rawData.replaceAll("<StudyFieldsList>", "");
+        rawData = rawData.replaceAll("<StudyFields>", "");
+        rawData = rawData.replaceAll("<FieldValues>", "");
+        rawData = rawData.replaceAll("</FieldValues>", "");
+        rawData = rawData.replaceAll("<StudyFields Rank=\"1\">\n", "");
+        rawData = rawData.replaceAll("<FieldValues Field=\"BriefTitle\">", "");
+        rawData = rawData.replaceAll("<FieldValues Field=\"Condition\">", "");
+        rawData = rawData.replaceAll("<FieldValues Field=\"BriefSummary\">", "");
+        rawData = rawData.replaceAll("</StudyFieldsList>", "");
+        rawData = rawData.replaceAll("</StudyFields>", "");
+        rawData = rawData.replaceAll("</StudyFieldsResponse>", "");
+        rawData = rawData.replaceAll(":", "");
+        return rawData;
+    }
+    }
+
