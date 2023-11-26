@@ -1,9 +1,7 @@
-const MongoClient = require('mongodb');
-
+const {MongoClient} = require('mongodb');
+require('dotenv').config()
 const connectionString = process.env.ATLAS_URI || "";
-
-const client = new MongoClient(connectionString);
-
+const client = new MongoClient(connectionString, {useNewUrlParser: true, useUnifiedTopology: true});
 let conn;
 try {
   conn = await client.connect();
@@ -13,4 +11,4 @@ try {
 
 let db = conn.db("med-data");
 
-export default db;
+module.exports = {db};

@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../db/conn.js');
 const axios = require('axios');
 const url = require('url');
+require('dotenv').config()
 const {ObjectId} = require('mongodb')
 
 const router = express.Router();
@@ -58,4 +59,4 @@ async function convertToCPT(search) {
     return response.json();
 }
 
-export default router;
+module.exports = {router};
