@@ -1,13 +1,15 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
-const PORT = 8080;
+require('dotenv').config()
+const cpt = require("./routes/cpt.js");
+
+const PORT = process.env.PORT || 8080;
+const app = express();
 
 app.use(cors());
+app.use(express.json());
 
-app.get("/api/home", (req, res) => {
-    res.json({message: "hiii"});
-})
+app.use("/cpt", cpt)
 
 app.listen(PORT, () => {
     console.log('server started on port ' + PORT);
