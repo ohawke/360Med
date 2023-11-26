@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/cpt", cpt)
+app.use("/cpt", cpt);
 
 app.listen(PORT, () => {
     console.log('server started on port ' + PORT);
