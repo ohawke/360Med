@@ -23,7 +23,7 @@ router.get("/search", async (req, res) => {
     for(var key in req.body){ 
     req.body[key] !== "" ? query[key] = req.body[key] : null;
     }
-    let codeList = convertToCPT(req.body['search'])['result'][0]['results'];
+    let codeList = await convertToCPT(req.body['search'])['result'][0]['results'];
     const result = [];
     for (var code in codeList) {
         let finalQuery = Object.assign({"CPT/HCPCS Code": code['ui']}, query);
