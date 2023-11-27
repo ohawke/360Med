@@ -76,29 +76,23 @@ export default function Home() {
             <option value="" disabled selected>Range</option>
           </select>
           <select className={styles.f_btn}>
-            <option>Option 2</option>
+            <option>Location</option>
           </select>
           <select className={styles.f_btn}>
-            <option>Option 3</option>
+            <option>Procedure Type</option>
           </select>
           <select className={styles.f_btn}>
-            <option>Option 4</option>
+            <option>Demographic</option>
           </select>
           <select className={styles.f_btn}>
-            <option>Option 5</option>
+            <option>Sample Size</option>
           </select>
           <select className={styles.f_btn}>
-            <option>Option 6</option>
-          </select>
-          <select className={styles.f_btn}>
-            <option>Option 7</option>
-          </select>
-          <select className={styles.f_btn}>
-            <option>Option 8</option>
+            <option>Data Source</option>
           </select>
         </div>
       <div className={styles.main}>
-        <h1 className={styles.h1}>Mortality Rate of TAVR from 2013 to 2022</h1>
+        <h1 className={styles.h1}>Mortality Rate of TAVR from 2013 to 2022</h1> 
         <Bar 
           data={data} 
           id={styles.vis}
