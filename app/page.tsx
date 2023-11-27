@@ -83,8 +83,14 @@ export default function Home() {
           ></Image>
         </a>
         <div className={styles.search}>
-          <input id={styles.search} type="text" placeholder="Search..."></input>
-          <button id={styles.search_btn} onClick={(e) => functest(e)}><div id={styles.search_icn}>&#9906;</div></button>
+          <input 
+            id={styles.search} 
+            type="text" 
+            placeholder="Search..."
+            value={searchContent}
+            onChange={(e) => setSearchContent(e.target.value)}></input>
+          <button 
+          id={styles.search_btn} onClick={function(event){reset();search();}}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
           <button id={styles.account} className={styles.hoverEffect}>Logout</button>
