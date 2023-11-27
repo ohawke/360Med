@@ -9,9 +9,9 @@ let client;
 
 const router = express.Router();
 
-// Get a list of 50 codes
+// Get a list of 10 codes
 router.get("/", async (req, res) => {
-  client = new MongoClient(URI, { useNewUrlParser: true });
+  client = new MongoClient(URI);
   const cursor = await client.db("med-data").collection("cpt");
   let results = await cursor.find({})
     .limit(10)
@@ -22,18 +22,28 @@ router.get("/", async (req, res) => {
 
 // search cpt codes
 router.get("/search", async (req, res) => {
-    client = new MongoClient(URI, { useNewUrlParser: true });
+    client = new MongoClient(URI);
     const cursor = await client.db("med-data").collection("cpt");
     let query = {};    
     for(var key in req.body){ 
-    req.body[key] !== "" ? query[key] = req.body[key] : null;
+      if (key == 'search') {
+        continue;
+      } else {
+        req.body[key] !== "" ? query[key] = req.body[key] : null;
+      }
     }
-    let codeList = await convertToCPT(req.body['search'])['result'][0]['results'];
+    let codeList = await (convertToCPT(req.query.search));
+    let outputJson = codeList['data']['result']['results']
     const result = [];
-    for (var code in codeList) {
-        let finalQuery = Object.assign({"CPT/HCPCS Code": code['ui']}, query);
-        let hit = await cursor.find(finalQuery);
-        result.push(hit);
+    for (var code in outputJson) {
+        if (result.length > 20) {
+            break;
+        }
+        let finalQuery = Object.assign({"CPT/HCPCS Code": outputJson[code]['ui']}, query);
+        let hit = await cursor.find(finalQuery).toArray();
+        for (item in hit) {
+          result.push(hit[item]);
+        }
     }
     await client.close();
     if (!result) res.send("Not found").status(404);
@@ -57,13 +67,13 @@ async function convertToCPT(search) {
         method: "get",
         url: 'https://uts-ws.nlm.nih.gov/rest/search/current',
         params: {
-            string: search,
-            apiKey: process.env.THES_KEY,
-            sabs: 'CPT',
-            returnIdType:'code'
+            'string': String(search),
+            'apiKey': process.env.THES_KEY,
+            'sabs': 'CPT',
+            'returnIdType':'code'
         },
       });
-    return response.json();
+    return response;
 }
 
 module.exports = router;
