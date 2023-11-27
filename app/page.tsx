@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -22,16 +22,10 @@ ChartJS.register(
   Legend
 );
 
-async function functest(e: any) {
-  if (document.getElementById(styles.search)) {
-    // let searchedFor = document.getElementById(styles.search).value;
-    let temp = await fetch('http://localhost:5050/cpt')
-    console.log(temp)
-  }
-}
 
 export default function Home() {
-  let [searchContent, setSearchContent] = useState(''); 
+  const dataShowRef = useRef<HTMLDivElement>(null);
+  const [searchContent, setSearchContent] = useState(''); 
   const labels = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
   const [data, setData] = useState({
     labels: labels,
@@ -46,30 +40,102 @@ export default function Home() {
       ],
       borderWidth: 1
     }]
-  });
-  const [showList1, setShowList1] = useState(false);
-  const [showList2, setShowList2] = useState(false);
+  })
 
-  const reset = () => {
-    setShowList1(false);
-    setShowList2(false);
-  };
-
-  const search = () => {
-    const lowerCaseSearchContent = searchContent.toLowerCase();
-    if (lowerCaseSearchContent === 'aortic') {
-      setShowList1(true);
-      setShowList2(false);
-    } else if (lowerCaseSearchContent === 'glioblastoma') {
-      setShowList1(false);
-      setShowList2(true);
-    } else {
-      setShowList1(false);
-      setShowList2(false);
+  const functest = async (e: any) => {
+    if (searchContent.trim() === '') {
+      return;
     }
-
-    setSearchContent('');
+    if (document.getElementById(styles.search)) {
+      var endpoint = "http://localhost:5050/cpt/search?search=%";
+      endpoint = endpoint.replace('%', searchContent);
+      let temp = await fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+        showData(data[0]);
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    }
+  }
+  
+  interface Data {
+    "": number;
+    "50% Therapy Reduction Amount/Flat Visit Fee": number;
+    "50% Therapy Reduction Amount": number;
+    "CPT/HCPCS Code": string;
+    "Facility Fee Schedule Amount": number;
+    "Multiple Surgery Indicator": number;
+    "OPPS Facility Fee Amount": number;
+    "OPPS Indicator": number;
+    "OPPS Non Facility Fee Amount": number;
+    "PCTC Indicator": number;
+    "Pricing Locality": number;
+    "Status Code": string;
+    _id: string;
+    Year: number;
+  }
+  
+  // const showData = (data: Data) => {
+  //   console.log(data["Status Code"]);
+  //   console.log(data["CPT/HCPCS Code"]);
+  //   const dataShow = document.getElementById('data_show');
+  //   if (dataShow) {
+  //     // dataShow.innerHTML = ""; // Clear previous content
+  
+  //     // const detailsContainer = document.getElementById('data_show');
+  //       const details = document.createElement('div');
+  //       details.innerHTML = `
+  //         <p>Hi</p>
+        
+  //       `;
+  //       dataShow.appendChild(details);
+  //     }
+  //   }
+  const showData = (data: Data) => {
+    console.log(data["Status Code"]);
+    if (dataShowRef.current) {
+      dataShowRef.current.innerHTML = ""; // Clear previous content
+  
+      const detailsContainer = dataShowRef.current;
+  
+      if (detailsContainer) {
+        const details = document.createElement('div');
+        details.innerHTML = `
+          <h2>${data["Status Code"]}</h2>
+          <p>${data["CPT/HCPCS Code"]}</p>
+        `;
+        detailsContainer.appendChild(details);
+      }
+    }
   };
+  
+
+  // const [showList1, setShowList1] = useState(false);
+  // const [showList2, setShowList2] = useState(false);
+
+  // const reset = () => {
+  //   setShowList1(false);
+  //   setShowList2(false);
+  // };
+
+  // const search = () => {
+  //   const lowerCaseSearchContent = searchContent.toLowerCase();
+  //   if (lowerCaseSearchContent === 'aortic') {
+  //     setShowList1(true);
+  //     setShowList2(false);
+  //   } else if (lowerCaseSearchContent === 'glioblastoma') {
+  //     setShowList1(false);
+  //     setShowList2(true);
+  //   } else {
+  //     setShowList1(false);
+  //     setShowList2(false);
+  //   }
+
+  //   setSearchContent('');
+
   return (
     <main className={styles.body}>
       <div className={styles.header}>
@@ -83,7 +149,11 @@ export default function Home() {
           ></Image>
         </a>
         <div className={styles.search}>
-          <input id={styles.search} type="text" placeholder="Search..."></input>
+          <input id={styles.search} 
+            type="text" 
+            placeholder="Search..." 
+            value={searchContent}
+            onChange={(e) => setSearchContent(e.target.value)}></input>
           <button id={styles.search_btn} onClick={(e) => functest(e)}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
@@ -138,7 +208,8 @@ export default function Home() {
           height={140}
           width={300}
           /> */}
-        <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
+        <div ref={dataShowRef} id={styles.data_show}></div>
+        <div className={styles.list1} style={{display:'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>
         <ol>
@@ -303,7 +374,7 @@ ial to demonstrate whether early surgery improves mortality and morbidity of pat
         </ol>
       </div>
       {/* Glioblastoma Clinical Trials TO BE IMPLEMENTED */}
-        <div className={styles.list2} style={{display: showList2 ? 'block' : 'none'}}>
+        <div className={styles.list2} style={{display:'none'}}>
         <h2>Clinical Trials for Glioblastoma</h2>
         <ul>
           <li>
@@ -503,4 +574,4 @@ ed glioblastoma isocitrate dehydrogenase (IDH) wild type.
       </div>
     </main>
   )
-}
+};
