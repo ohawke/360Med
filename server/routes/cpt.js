@@ -42,7 +42,7 @@ router.get("/search", async (req, res) => {
         let finalQuery = Object.assign({"CPT/HCPCS Code": outputJson[code]['ui']}, query);
         let hit = await cursor.find(finalQuery).toArray();
         for (item in hit) {
-          result.push(hit[item]);
+          result.push(Object.assign(hit[item], {'name': outputJson[code]['name']}));
         }
     }
     await client.close();
