@@ -24,7 +24,7 @@ ChartJS.register(
 
 async function functest(e: any) {
   if (document.getElementById(styles.search)) {
-    let searchedFor = document.getElementById(styles.search).value;
+    // let searchedFor = document.getElementById(styles.search).value;
     let temp = await fetch('http://localhost:5050/cpt')
     console.log(temp)
   }
@@ -483,6 +483,7 @@ ed glioblastoma isocitrate dehydrogenase (IDH) wild type.
             </div>
           </li>
         </ul>
+      </div>
       </div>
       <div className={styles.footer}>
         <a className={styles.logo}>
