@@ -22,6 +22,14 @@ ChartJS.register(
   Legend
 );
 
+async function functest(e: any) {
+  if (document.getElementById(styles.search)) {
+    let searchedFor = document.getElementById(styles.search).value;
+    let temp = await fetch('http://localhost:5050/cpt')
+    console.log(temp)
+  }
+}
+
 export default function Home() {
   let [searchContent, setSearchContent] = useState(''); 
   const labels = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
@@ -75,14 +83,8 @@ export default function Home() {
           ></Image>
         </a>
         <div className={styles.search}>
-          <input 
-            id={styles.search} 
-            type="text" 
-            value={searchContent}
-            onChange={(e) => setSearchContent(e.target.value)}
-            placeholder="Search...">
-          </input>
-          <button id={styles.search_btn} onClick={function(event){reset();search()}}><div id={styles.search_icn}>&#9906;</div></button>
+          <input id={styles.search} type="text" placeholder="Search..."></input>
+          <button id={styles.search_btn} onClick={(e) => functest(e)}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
           <button id={styles.account} className={styles.hoverEffect}>Logout</button>
@@ -139,7 +141,7 @@ export default function Home() {
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>
-        <ul>
+        <ol>
           <li>
             <div>
               <h3> Outcomes of Surgery of Aortic Valve</h3> 
@@ -153,8 +155,8 @@ Objective3 Assess outcomes such as postoperative life expectancy, hospital stay,
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3>  Microembolic Signals and Cerebrospinal Fluid Markers of Neuronal Damage After Surgical Aortic Valve Replacement</h3> 
@@ -168,8 +170,8 @@ sive microembolic signals in intracerebral arteries during open heart procedures
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3>  Long-Term Follow-up After the Autograft Aortic Valve Procedure (Ross Operation)</h3> 
@@ -183,8 +185,8 @@ ure is rather arbitrarily. The investigators hypothesize that the autograft proc
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3>   Early Aortic valve surgery Versus watchful waiting Strategy in Severe Asymptomatic aortic regurgitation</h3> 
@@ -210,8 +212,8 @@ essment, early surgical treatment will be compared with conventional guideline-b
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3>   Cognitive Outcome After Surgical and Transcatheter Aortic Valve Replacement</h3> 
@@ -225,8 +227,8 @@ gh-risk patients. Recently, increased surgeon experience and improved transcathe
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3>   Use of Transvenous Pacing Wire During Minimally Invasive Port Access Aortic Valve Surgery</h3> 
@@ -239,8 +241,8 @@ y hypothesis is that the Endovent kit can be used effectively as a passageway fo
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3> A Prospective Multicenter Pivotal Study to Evaluate Safety and Effectiveness of Venus-Neo Surgical Aortic Valve</h3> 
@@ -250,8 +252,8 @@ ted for aortic valve replacement.
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3> Comparison of Transcatheter Versus Surgical Aortic Valve Replacement in Younger Low Surgical Risk Patients With Severe Aortic Stenosis</h3> 
@@ -262,8 +264,8 @@ Study hypothesis The clinical outcome (composite endpoint of all-cause mortality
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3> Acute Lung Injury After Aortic Valve Surgery</h3> 
@@ -283,8 +285,8 @@ Are budesonide, erdostein and acetylcystein effective in the prevention of lung 
               </p>
             </div>
           </li>
-        </ul>
-        <ul>
+        </ol>
+        <ol>
           <li>
             <div>
               <h3>  Early Surgery for Patients With Asymptomatic Aortic Stenosis</h3> 
@@ -298,8 +300,7 @@ ial to demonstrate whether early surgery improves mortality and morbidity of pat
               </p>
             </div>
           </li>
-        </ul>
-      </div>
+        </ol>
       </div>
       {/* Glioblastoma Clinical Trials TO BE IMPLEMENTED */}
         <div className={styles.list2} style={{display: showList2 ? 'block' : 'none'}}>
