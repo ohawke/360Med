@@ -128,6 +128,7 @@
 .main {
     grid-row: 3 / 4;
     padding: 1vh 3vw;
+    min-height: 89vh;
 }
     .h1 {
         font-size: 2vw;
@@ -189,30 +190,6 @@
         margin: auto;
         padding-right: 4vw;
     }
-/* .label {
-grid-area: 1 / 1 / 2 / 3;
-margin: auto;
-}
-.selection {
-grid-area: 2 / 1 / 3 / 2;
-display: grid;
-grid-template-rows: repeat(4, 1fr);
-grid-gap: 1vh;
-}
-#bar {
-    grid-row: 1 / 2;
-}
-#pie {
-    grid-row: 2 / 3;
-}
-#line {
-    grid-row: 3 / 4;
-}
-#map {
-    grid-row: 4 / 5;
-    padding-bottom: 4vh;
-}
-.main_vis {
-grid: 2 / 2 / 3 / 3;
-padding-bottom: 4vh;
+/* .list1, .list2 {
+    display: none;
 } */
