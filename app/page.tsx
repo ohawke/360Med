@@ -23,6 +23,7 @@ ChartJS.register(
 );
 
 export default function Home() {
+  const [searchContent, setSearchContent] = useState(''); 
   const labels = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
   const [data, setData] = useState({
     labels: labels,
@@ -51,7 +52,13 @@ export default function Home() {
           ></Image>
         </a>
         <div className={styles.search}>
-          <input id={styles.search} type="text" placeholder="Search..."></input>
+          <input 
+            id={styles.search} 
+            type="text" 
+            value={searchContent}
+            onChange={(e) => setSearchContent(e.target.value)}
+            placeholder="Search...">
+          </input>
           <button id={styles.search_btn}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
@@ -61,6 +68,13 @@ export default function Home() {
       <br></br>
       <div className={styles.filter}>
           <div className={styles.f_btn} id={styles.f_label}>Filter</div>
+          <select className={styles.f_btn} name="data_type">
+            <option value="" disabled selected>Data Type</option>
+            <option value="mortality">Mortality Rate</option>
+            <option value="clinical">Clinical Trials</option>
+            <option value="medicine">Medicine</option>
+            <option value="map">Heat Map</option>
+          </select>
           <select className={styles.f_btn} name="chart_type">
             <option value="" disabled selected>Chart Type</option>
             <option value="bar">Bar Graph</option>
@@ -90,22 +104,16 @@ export default function Home() {
           <select className={styles.f_btn}>
             <option>Option 6</option>
           </select>
-          <select className={styles.f_btn}>
-            <option>Option 7</option>
-          </select>
-          <select className={styles.f_btn}>
-            <option>Option 8</option>
-          </select>
         </div>
       <div className={styles.main}>
         <h1 className={styles.h1}>Mortality Rate of TAVR from 2013 to 2022</h1>
-        <Bar 
+        {/* <Bar 
           data={data} 
           id={styles.vis}
           height={140}
           width={300}
-          />
-        <div className={styles.list}>
+          /> */}
+        <div className={styles.list} id={styles.aortic}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>
         <ul>
@@ -270,8 +278,8 @@ ial to demonstrate whether early surgery improves mortality and morbidity of pat
         </ul>
       </div>
       </div>
-      {/* Glioblastoma Clinical Trials TO BE IMPLEMENTED
-        <div className={styles.list}>
+      {/* Glioblastoma Clinical Trials TO BE IMPLEMENTED */}
+        <div className={styles.list} id={styles.glioblastoma}>
         <h2>Clinical Trials for Glioblastoma</h2>
         <ul>
           <li>
@@ -452,7 +460,6 @@ ed glioblastoma isocitrate dehydrogenase (IDH) wild type.
           </li>
         </ul>
       </div>
-      */}
       <div className={styles.footer}>
         <a className={styles.logo}>
           <Image
