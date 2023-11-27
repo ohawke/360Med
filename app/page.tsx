@@ -23,7 +23,7 @@ ChartJS.register(
 );
 
 export default function Home() {
-  const [searchContent, setSearchContent] = useState(''); 
+  let [searchContent, setSearchContent] = useState(''); 
   const labels = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
   const [data, setData] = useState({
     labels: labels,
@@ -39,6 +39,29 @@ export default function Home() {
       borderWidth: 1
     }]
   });
+  const [showList1, setShowList1] = useState(false);
+  const [showList2, setShowList2] = useState(false);
+
+  const reset = () => {
+    setShowList1(false);
+    setShowList2(false);
+  };
+
+  const search = () => {
+    const lowerCaseSearchContent = searchContent.toLowerCase();
+    if (lowerCaseSearchContent === 'aortic') {
+      setShowList1(true);
+      setShowList2(false);
+    } else if (lowerCaseSearchContent === 'glioblastoma') {
+      setShowList1(false);
+      setShowList2(true);
+    } else {
+      setShowList1(false);
+      setShowList2(false);
+    }
+
+    setSearchContent('');
+  };
   return (
     <main className={styles.body}>
       <div className={styles.header}>
@@ -59,7 +82,7 @@ export default function Home() {
             onChange={(e) => setSearchContent(e.target.value)}
             placeholder="Search...">
           </input>
-          <button id={styles.search_btn}><div id={styles.search_icn}>&#9906;</div></button>
+          <button id={styles.search_btn} onClick={function(event){reset();search()}}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
           <button id={styles.account} className={styles.hoverEffect}>Logout</button>
@@ -106,14 +129,14 @@ export default function Home() {
           </select>
         </div>
       <div className={styles.main}>
-        <h1 className={styles.h1}>Mortality Rate of TAVR from 2013 to 2022</h1>
+        {/* <h1 className={styles.h1}>Mortality Rate of TAVR from 2013 to 2022</h1> */}
         {/* <Bar 
           data={data} 
           id={styles.vis}
           height={140}
           width={300}
           /> */}
-        <div className={styles.list} id={styles.aortic}>
+        <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>
         <ul>
@@ -279,7 +302,7 @@ ial to demonstrate whether early surgery improves mortality and morbidity of pat
       </div>
       </div>
       {/* Glioblastoma Clinical Trials TO BE IMPLEMENTED */}
-        <div className={styles.list} id={styles.glioblastoma}>
+        <div className={styles.list2} style={{display: showList2 ? 'block' : 'none'}}>
         <h2>Clinical Trials for Glioblastoma</h2>
         <ul>
           <li>
