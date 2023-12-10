@@ -1,4 +1,4 @@
-# medical-innovator
+# 360Med
 Junior Design Project for Team JDF-3357
 
 Description: The platform has two key parts. First is the server; for the purposes of the demo, it is running locally. It contains data from the Center for Medicare and Medicaid Services stored in MongoDB. This is run through JavaScript. Next, there is the front end, which accesses and displays this data, which utilizes TypeScript. This is the core basis of the project. We also have CSS files, png files for images and logos, etc.
