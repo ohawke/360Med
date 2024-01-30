@@ -1,6 +1,15 @@
 # 360Med
-Junior Design Project for Team JDF-3357
+Junior Design Project for Team JID-3357
 
-Description: The platform has two key parts. First is the server; for the purposes of the demo, it is running locally. It contains data from the Center for Medicare and Medicaid Services stored in MongoDB. This is run through JavaScript. Next, there is the front end, which accesses and displays this data, which utilizes TypeScript. This is the core basis of the project. We also have CSS files, png files for images and logos, etc.
+Our project allows medical researchers to learn about project cost before embarking on a project by compiling data from various databases.
 
-Rationale: We started with the database and connection functionality simply because it provided a framework for the rest of the project to build on. Advanced filtering, saving, etc. all need to be added to this foundation.
+## v.0.1.0
+
+### Features
+- Temporary front-end and server with Medicaid codes set up
+
+### Bug fixes
+- The temporary backend of the server should now work for multiple IP addresses
+
+### Known Issues
+- We only have a barebones temporary backend setup
