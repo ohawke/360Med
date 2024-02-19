@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
+import { MapContainter } from './components';
 
 ChartJS.register(
   CategoryScale,
@@ -29,6 +30,16 @@ async function functest(e: any) {
     console.log(temp)
   }
 }
+
+/*
+async function searchCPT(e: any) {
+  if (document.getElementById(styles.search)) {
+    let searchedFor = document.getElementById(styles.search).value;
+    let temp = await fetch('http://localhost:5050/cpt/search/search?=' + searchedFor)
+    console.log(temp)
+  }
+}
+*/
 
 export default function Home() {
   let [searchContent, setSearchContent] = useState(''); 
@@ -144,6 +155,7 @@ export default function Home() {
           height={140}
           width={300}
           /> */}
+        {<MapContainter />}
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>
