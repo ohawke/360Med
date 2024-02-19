@@ -1,10 +1,10 @@
 import styles from './styles.module.css';
 import Map from './Map'
 
-const MapContainer = () => {
+const MapContainer = (data: any) => {
     return (
         <div className={styles.mapContainer}>
-            <Map />
+            <Map data={data} />
         </div>
     )
 };

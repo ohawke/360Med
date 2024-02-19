@@ -43,6 +43,7 @@ async function searchCPT(e: any) {
 
 export default function Home() {
   let [searchContent, setSearchContent] = useState(''); 
+  let [searchResult, setSearchResult] = useState([]);
   const labels = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
   const [data, setData] = useState({
     labels: labels,
@@ -81,6 +82,17 @@ export default function Home() {
 
     setSearchContent('');
   };
+
+  const searchCPT = async () => {
+    const lowerCaseSearchContent = searchContent.toLowerCase();
+    console.log(lowerCaseSearchContent);
+    let temp = await fetch('http://localhost:5050/cpt/search/search?=' + lowerCaseSearchContent);
+    let result = JSON.parse(await temp.json());
+    console.log(result);
+    setSearchContent('');
+    setSearchResult(result);
+  }
+
   return (
     <main className={styles.body}>
       <div className={styles.header}>
@@ -101,7 +113,7 @@ export default function Home() {
             value={searchContent}
             onChange={(e) => setSearchContent(e.target.value)}></input>
           <button 
-          id={styles.search_btn} onClick={function(event){reset();search();}}><div id={styles.search_icn}>&#9906;</div></button>
+          id={styles.search_btn} onClick={function(event){searchCPT();}}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
           <button id={styles.account} className={styles.hoverEffect}>Logout</button>
@@ -155,7 +167,7 @@ export default function Home() {
           height={140}
           width={300}
           /> */}
-        {<MapContainter />}
+        {<MapContainter data={searchResult} />}
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>

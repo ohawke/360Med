@@ -2,7 +2,7 @@ import React from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 const mapdata = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 
-const Map = () => {
+const Map = (data: any) => {
   return (
     <ComposableMap
       projection='geoAlbersUsa'
