@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
+import main from './ClinicalTrials'
 
 ChartJS.register(
   CategoryScale,
@@ -103,7 +104,7 @@ export default function Home() {
             value={searchContent}
             onChange={(e) => setSearchContent(e.target.value)}></input>
           <button 
-          id={styles.search_btn} onClick={function(event){reset();search();}}><div id={styles.search_icn}>&#9906;</div></button>
+          id={styles.search_btn} onClick={function(event){reset();main();}}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
           <button id={styles.account} className={styles.hoverEffect}>Logout</button>
