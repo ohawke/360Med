@@ -106,3 +106,4 @@ async function printData(lines, fields) {
     }
 
     main();
+    export default main;
