@@ -1,3 +1,4 @@
+import axios from 'axios';
 function cleanData(rawData) {
     rawData = rawData.replaceAll("<FieldValue>", "");
     rawData = rawData.replaceAll("</Field>", "");
@@ -21,6 +22,19 @@ function cleanData(rawData) {
 }
 
 async function apiRequest(fields, input) {
+    /*const response = axios({
+        method: "get",
+        url: 'https://uts-ws.https://classic.clinicaltrials.gov/api/query/nlm.nih.gov/rest/search/current',
+        params: {
+            'study_fields': input,
+            'fields': ['BriefTitle', 'Condition', 'BriefSummary', ],
+            'min_rnk': 1,
+            'max_rnk': 10,
+            'fmt': 'xml'
+        },
+    });
+    const data = await response.xml();
+    return data;*/
     try {
         let url;
         if (fields) {
@@ -97,12 +111,11 @@ async function printData(lines, fields) {
 
     }
 
-    async function main() {
-        let output = await pullData("heart cancer");
-        output = cleanData(output);
-        console.log(output);
+    async function main(searchTerm) {
+        let output = pullData(searchTerm);
+        return output;
         //const resultElement = document.getElementById('result');
         //resultElement.innerText = output;
     }
 
-    main();
+    export default main;

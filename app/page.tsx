@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import main from './ClinicalTrials'
 
@@ -57,33 +57,18 @@ export default function Home() {
     setShowList1(false);
     setShowList2(false);
   };
-  const [result, setResult] = useState<string | undefined>();
+  const [result, setResult] = useState('');
   const search = () => {
     const lowerCaseSearchContent = searchContent.toLowerCase();
     //const [result, setResult] = useState<string | undefined>();
-    pullData(lowerCaseSearchContent).then(data => {
+    main(lowerCaseSearchContent).then(data => {
       setResult(data);
-    });
-    return (
-      <div>
-        <button onClick={search}>Search</button>
-        {result && <div id="result">{result}</div>}
-      </div>
-    )
-    if (lowerCaseSearchContent === 'aortic') {
-      setShowList1(true);
-      setShowList2(false);
-    } else if (lowerCaseSearchContent === 'glioblastoma') {
-      setShowList1(false);
-      setShowList2(true);
-    } else {
-      setShowList1(false);
-      setShowList2(false);
-      const trialData = pullData(lowerCaseSearchContent);
-    }
-
-    setSearchContent('');
+    }).then(() => setSearchContent(''));
+    ;
   };
+  useEffect(() => {
+    {result}
+  }, [result]);
   return (
     <main className={styles.body}>
       <div className={styles.header}>
@@ -104,7 +89,7 @@ export default function Home() {
             value={searchContent}
             onChange={(e) => setSearchContent(e.target.value)}></input>
           <button 
-          id={styles.search_btn} onClick={function(event){reset();main();}}><div id={styles.search_icn}>&#9906;</div></button>
+          id={styles.search_btn} onClick={function(event){reset();search();}}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
           <button id={styles.account} className={styles.hoverEffect}>Logout</button>
@@ -151,7 +136,8 @@ export default function Home() {
           </select>
         </div>
       <div className={styles.main}>
-        <h1>Clinical Trials Data<span id = "result"></span> </h1>
+        <h1>Clinical Trials Data </h1>
+        <div>{result}</div>
       </div>
       <div className={styles.footer}>
         <a className={styles.logo}>
