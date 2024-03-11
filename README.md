@@ -3,6 +3,19 @@ Junior Design Project for Team JID-3357
 
 Our project allows medical researchers to learn about project cost before embarking on a project by compiling data from various databases.
 
+## v.0.3.0
+
+### Features
+- Improved US heat map functionality 
+- US map is divided by states and counties that can be selected by the user
+- Developed landing home page for better UX
+
+### Bug fixes
+
+
+### Known Issues
+- Main page is not fully implemented yet
+
 ## v.0.2.0
 
 ### Features
