@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { MapContainter } from './components';
 
@@ -97,12 +97,15 @@ export default function Home() {
   const searchCPT = async () => {
     const lowerCaseSearchContent = searchContent.toLowerCase();
     console.log(lowerCaseSearchContent);
-    let temp = await fetch('http://localhost:5050/cpt/search/search?=' + lowerCaseSearchContent);
-    let result = JSON.parse(await temp.json());
-    console.log(result);
+    let temp = fetch('http://localhost:5050/cpt/search/search?=' + lowerCaseSearchContent)
+      .then((res) => res.json())
+      .then((data) => setSearchResult(data));
     setSearchContent('');
-    setSearchResult(result);
   }
+
+  useEffect(() => {
+    search();
+  }, []);
 
   return (
     <main className={styles.body}>
@@ -124,7 +127,7 @@ export default function Home() {
             value={searchContent}
             onChange={(e) => setSearchContent(e.target.value)}></input>
           <button 
-          id={styles.search_btn} onClick={function(event){searchCPT();}}><div id={styles.search_icn}>&#9906;</div></button>
+          id={styles.search_btn} onClick={() => {searchCPT()}}><div id={styles.search_icn}>&#9906;</div></button>
         </div>
         <a className={styles.account} href="login.html">
           <button id={styles.account} className={styles.hoverEffect}>Logout</button>
@@ -179,6 +182,7 @@ export default function Home() {
           width={300}
           /> */}
         {<MapContainter data={searchResult} />}
+        {searchResult}
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>
