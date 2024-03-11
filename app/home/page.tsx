@@ -12,7 +12,7 @@ import {
 } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { MapContainter } from './components';
+import { MapContainter } from '../components';
 
 ChartJS.register(
   CategoryScale,
@@ -95,7 +95,7 @@ export default function Home() {
   return (
     <main className={styles.body}>
       <div className={styles.header}>
-        <a className={styles.logo_img}>
+        <a className={styles.logo_img} href='/landing-page'>
           <Image
             src="/logo.png" 
             alt="360Med"
