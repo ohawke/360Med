@@ -23,7 +23,6 @@ const Map = () => {
     let items = JSON.parse(sessionStorage.getItem("result") || '{}');
     setData(items);
   }, []);
-
   return (
     <ComposableMap
       projection='geoAlbersUsa'
@@ -34,7 +33,11 @@ const Map = () => {
       <Geographies geography={mapdata}>
         {(geographies: any) => {
           return geographies.geographies.map((geo: any) => {
-            const cur = data.find((s: any) => s.counties.counties.includes(geo.properties.name.toLowerCase()));
+            let cur;
+            try {cur = data.find((s: any) =>  s.counties.counties.includes(geo.properties.name.toLowerCase())); 
+            } catch {
+              return <div />;
+            } 
               return (
                 <Geography
                   key={geo.rsmKey}
