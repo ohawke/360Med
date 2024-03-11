@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -25,14 +25,17 @@
 .main {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   min-height: 80vh;
   text-align: center;
+  gap: 20px;
 }
 
 .titleBlock {
   margin-bottom: 30px;
+  max-width: 80%;
 }
 
 .title {
@@ -41,6 +44,7 @@
 
 .understandable {
   text-decoration: underline;
+  color: #388087
 }
 
 .subtitle {
@@ -50,15 +54,17 @@
 
 .startButton {
   padding: 10px 20px;
-  background-color: #000;
+  background-color: #6FB3B8;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.graphBlock {
-  /* Styles for your graph placeholder */
+.graphImage {
+  min-width: 50vh;
+  width: 100%; 
+  height: auto;
 }
 
 .footer {

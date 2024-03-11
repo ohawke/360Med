@@ -1,19 +1,28 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image'
 import styles from './landing-page.module.css'; // make sure to create this CSS module
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className={styles.page}>
       <Head>
-        <title>MedConnect</title>
+        <title>360Med</title>
         <meta name="description" content="Unlocking medical data through visualization" />
       </Head>
       
       <header className={styles.header}>
         <nav className={styles.nav}>
-          <div className={styles.logo}>MEDCONNECT</div>
-          <div className={styles.loginButton}>Login</div>
+          <div className={styles.logo}>360Med</div>
+          <a className={styles.logo_img}>
+          <Image
+            src="/logo.png" 
+            alt="360Med"
+            id={styles.logo_img} 
+            width={120}
+            height={40}
+          ></Image>
+        </a>
         </nav>
       </header>
 
@@ -21,10 +30,14 @@ export default function LandingPage() {
         <div className={styles.titleBlock}>
           <h1 className={styles.title}>MEDICAL DATASET MADE <span className={styles.understandable}>understandable</span></h1>
           <p className={styles.subtitle}>Take the first step towards unlocking the vast world of medical knowledge. We make searching through medical data simple and stress-free by replacing tables of data into straightforward visualizations.</p>
+          <p> _</p>
           <a className={styles.startButton}>Start Now</a>
         </div>
         <div className={styles.graphBlock}>
-          {/* Placeholder for graph or image */}
+        <img
+            src="/graph_example.png" 
+            alt="Graph"
+            className={styles.graphImage}/>
         </div>
       </main>
 
