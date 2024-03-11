@@ -79,19 +79,6 @@ export default function Home() {
         {result && <div id="result">{result}</div>}
       </div>
     )
-    if (lowerCaseSearchContent === 'aortic') {
-      setShowList1(true);
-      setShowList2(false);
-    } else if (lowerCaseSearchContent === 'glioblastoma') {
-      setShowList1(false);
-      setShowList2(true);
-    } else {
-      setShowList1(false);
-      setShowList2(false);
-      const trialData = pullData(lowerCaseSearchContent);
-    }
-
-    setSearchContent('');
   };
 
   const searchCPT = async () => {
