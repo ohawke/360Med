@@ -4,7 +4,7 @@ import { scaleQuantize } from "d3-scale";
 const mapdata = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 
 const colorScale = scaleQuantize()
-  .domain([1, 300])
+  .domain([1, 2000])
   .range([
     "#ffedea",
     "#ffcec5",
@@ -21,6 +21,7 @@ const Map = () => {
   let [data, setData] = useState([]);
   useEffect(() => {
     let items = JSON.parse(sessionStorage.getItem("result") || '{}');
+    setData(items);
   }, []);
 
   return (
@@ -33,12 +34,12 @@ const Map = () => {
       <Geographies geography={mapdata}>
         {(geographies: any) => {
           return geographies.geographies.map((geo: any) => {
-            //const cur = data.find((s: any) => s.counties.counties[0] === geo.id);
+            const cur = data.find((s: any) => s.counties.counties.includes(geo.properties.name.toLowerCase()));
               return (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  //fill={colorScale(cur ? cur["Facility Fee Schedule Amount"] : "#EEE")}
+                  fill={colorScale(cur ? cur["Facility Fee Schedule Amount"] : 1)}
                 />
               );
           });
