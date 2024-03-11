@@ -36,7 +36,7 @@ router.get("/search", async (req, res) => {
     let outputJson = codeList['data']['result']['results']
     const result = [];
     for (var code in outputJson) {
-        if (result.length > 20) {
+        if (result.length > 10) {
             break;
         }
         let finalQuery = Object.assign({"CPT/HCPCS Code": outputJson[code]['ui']}, query);
