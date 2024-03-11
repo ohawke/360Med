@@ -17,12 +17,13 @@ const colorScale = scaleQuantize()
     "#782618"
   ]);
 
-const Map = () => {
-  let [data, setData] = useState([]);
+const Map = (data: any) => {
+  let [items, setItems] = useState(data);
+  
   useEffect(() => {
-    let items = JSON.parse(sessionStorage.getItem("result") || '{}');
-    setData(items);
-  }, []);
+    setItems(data.data.data);
+  }, [data]);
+
   return (
     <ComposableMap
       projection='geoAlbersUsa'
@@ -34,7 +35,8 @@ const Map = () => {
         {(geographies: any) => {
           return geographies.geographies.map((geo: any) => {
             let cur;
-            try {cur = data.find((s: any) =>  s.counties.counties.includes(geo.properties.name.toLowerCase())); 
+            try {
+              cur = items.find((s: any) =>  s.counties.counties.includes(geo.properties.name.toLowerCase())); 
             } catch {
               return <div />;
             } 

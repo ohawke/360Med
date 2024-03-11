@@ -43,7 +43,7 @@ async function searchCPT(e: any) {
 
 export default function Home() {
   let [searchContent, setSearchContent] = useState(''); 
-  let [searchResult, setSearchResult] = useState([]);
+  let [searchResult, setSearchResult] = useState('');
   const labels = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
   const [data, setData] = useState({
     labels: labels,
@@ -86,7 +86,7 @@ export default function Home() {
     let temp = fetch('http://localhost:5050/cpt/search?search=' + lowerCaseSearchContent)
       .then((resp) => resp.json())
       .then((data) => {
-        sessionStorage.setItem("result", JSON.stringify(data));
+        setSearchResult(data);
     });
 
     setSearchContent('');
@@ -167,7 +167,6 @@ export default function Home() {
           width={300}
           /> */}
         {<MapContainter data={searchResult} />}
-        {searchResult}
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>

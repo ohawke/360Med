@@ -7,7 +7,7 @@ const MapContainer = (data: any) => {
     }
     return (
         <div className={styles.mapContainer}>
-            <Map />
+            <Map data = {data}/>
         </div>
     )
 };
