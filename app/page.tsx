@@ -79,33 +79,19 @@ export default function Home() {
         {result && <div id="result">{result}</div>}
       </div>
     )
-    if (lowerCaseSearchContent === 'aortic') {
-      setShowList1(true);
-      setShowList2(false);
-    } else if (lowerCaseSearchContent === 'glioblastoma') {
-      setShowList1(false);
-      setShowList2(true);
-    } else {
-      setShowList1(false);
-      setShowList2(false);
-      const trialData = pullData(lowerCaseSearchContent);
-    }
-
-    setSearchContent('');
   };
 
   const searchCPT = async () => {
     const lowerCaseSearchContent = searchContent.toLowerCase();
-    console.log(lowerCaseSearchContent);
-    let temp = fetch('http://localhost:5050/cpt/search/search?=' + lowerCaseSearchContent)
-      .then((res) => res.json())
-      .then((data) => setSearchResult(data));
+    let temp = fetch('http://localhost:5050/cpt/search?search=' + lowerCaseSearchContent)
+      .then((resp) => resp.json())
+      .then((data) => {
+        sessionStorage.setItem("result", JSON.stringify(data));
+        console.log(data);
+    });
+
     setSearchContent('');
   }
-
-  useEffect(() => {
-    search();
-  }, []);
 
   return (
     <main className={styles.body}>
@@ -181,7 +167,7 @@ export default function Home() {
           height={140}
           width={300}
           /> */}
-        {<MapContainter data={searchResult} />}
+        //{<MapContainter data={searchResult} />}
         {searchResult}
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleQuantize } from "d3-scale";
 const mapdata = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
@@ -17,7 +17,12 @@ const colorScale = scaleQuantize()
     "#782618"
   ]);
 
-const Map = (data: any) => {
+const Map = () => {
+  let [data, setData] = useState([]);
+  useEffect(() => {
+    let items = JSON.parse(sessionStorage.getItem("result") || '{}');
+  }, []);
+
   return (
     <ComposableMap
       projection='geoAlbersUsa'
