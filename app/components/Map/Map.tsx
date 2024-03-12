@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleQuantize } from "d3-scale";
-const mapdata = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
+import * as topojson from "topojson-client";
+import mapdata from "../../../public/counties-10m.json"
 
 const colorScale = scaleQuantize()
   .domain([1, 2000])
@@ -36,9 +37,14 @@ const Map = (data: any) => {
           return geographies.geographies.map((geo: any) => {
             let cur;
             try {
-              cur = items.find((s: any) =>  s.counties.counties.includes(geo.properties.name.toLowerCase())); 
+              cur = items.find((s: any) =>  s.counties.counties.includes(geo.properties.name.toLowerCase()));
+              /*
+              if (!cur) {
+                const longstate = mapdata.objects.states((s: any) => s.properties.code == geo.properties.state).toLowerCase();
+                cur = items.find((s: any) =>  s.counties.state == longstate);
+              } */
             } catch {
-              return <div />;
+              return <div>Search to display data</div>;
             } 
               return (
                 <Geography

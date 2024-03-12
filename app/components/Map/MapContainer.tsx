@@ -3,7 +3,7 @@ import Map from './Map'
 
 const MapContainer = (data: any) => {
     if (!data) {
-        return <div/>
+        return <div>Search to display CPT data</div>
     }
     return (
         <div className={styles.mapContainer}>
