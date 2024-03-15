@@ -2,6 +2,8 @@
 
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import React from "react";
+import AsyncSelect, { useAsync } from 'react-select/async';
 import styles from '../home/page.module.css';
 
 
@@ -19,6 +21,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
+  
 
   return (
     <div className={styles.search}>
@@ -34,6 +37,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         }
         handleSearch(q);
       }}><div id={styles.search_icn}>&#9906;</div></button>
+
     </div>
   );
 }
