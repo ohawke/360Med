@@ -11,7 +11,7 @@ Our project allows medical researchers to learn about project cost before embark
 - Developed landing home page for better UX
 
 ### Bug fixes
-
+- Fixed crash when navigating from landing page to home page
 
 ### Known Issues
 - Main page is not fully implemented yet
