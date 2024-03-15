@@ -166,7 +166,7 @@ export default function Home() {
           height={140}
           width={300}
           /> */}
-        {<MapContainter data={searchResult} />}
+        //{<MapContainter data={searchResult} />}
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>

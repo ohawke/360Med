@@ -5,7 +5,7 @@ import * as topojson from "topojson-client";
 import mapdata from "../../../public/counties-10m.json"
 
 const colorScale = scaleQuantize()
-  .domain([1, 2000])
+  .domain([1, 1000])
   .range([
     "#ffedea",
     "#ffcec5",
