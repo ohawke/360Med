@@ -17,12 +17,31 @@ const colorScale = scaleQuantize()
     "#782618"
   ]);
 
-const Map = (data: any) => {
-  let [items, setItems] = useState(data);
+export default async function Map ({
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+}) {
+  let [items, setItems] = useState(query);
   
   useEffect(() => {
-    setItems(data.data.data);
-  }, [data]);
+    if (query == '') {
+      return;
+    }
+    const lowerCaseSearchContent = query.toLowerCase();
+    try {
+      let temp = fetch('http://localhost:5050/cpt/search?search=' + lowerCaseSearchContent)
+      .then((resp) => resp.json())
+      .then((data) => {
+        setItems(data);
+      });
+    } catch {
+      alert("failed to fetch");
+    }
+    console.log(items);
+  }, []);
 
   return (
     <ComposableMap
@@ -53,5 +72,3 @@ const Map = (data: any) => {
     </ComposableMap>
   );
 };
-
-export default Map;

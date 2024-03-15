@@ -12,7 +12,7 @@ import {
 } from 'chart.js';
 import { useEffect, useState, Suspense } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { MapContainter } from '../components';
+import { Map } from '../components';
 import { Search } from '../components';
 
 ChartJS.register(
@@ -171,7 +171,7 @@ export default function Home({
           width={300}
           /> */}
         <Suspense key={query + currentPage} fallback={<div>loading...</div>}>
-          <MapContainter data={searchResult} currentPage={currentPage} />
+          <Map query={query} currentPage={currentPage} />
         </Suspense>
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
