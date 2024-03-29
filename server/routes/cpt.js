@@ -56,7 +56,7 @@ router.get("/suggest", async (req, res) => {
     method: "get",
     url: 'https://uts-ws.nlm.nih.gov/rest/search/current',
     params: {
-        'string': String(req.query.search),
+        'string': String(req.body[search]),
         'apiKey': process.env.THES_KEY,
         'sabs': 'CPT',
         'returnIdType':'code',
@@ -64,7 +64,6 @@ router.get("/suggest", async (req, res) => {
     },
   });
   let result = codeList['data']['result']['results'];
-
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
 });
