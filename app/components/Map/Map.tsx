@@ -38,11 +38,12 @@ const Map = (data: any) => {
             let cur;
             try {
               cur = items.find((s: any) =>  s.counties.counties.includes(geo.properties.name.toLowerCase()));
-              /*
               if (!cur) {
-                const longstate = mapdata.objects.states((s: any) => s.properties.code == geo.properties.state).toLowerCase();
-                cur = items.find((s: any) =>  s.counties.state == longstate);
-              } */
+                const longstate = mapdata.objects.states.geometries.find((s: any) => s.properties.code == geo.properties.state);
+                if (longstate) {
+                  cur = items.find((s: any) =>  s.counties.state == longstate.properties.name.toLowerCase()); 
+                }
+              }
             } catch {
               return <div>Search to display data</div>;
             } 
