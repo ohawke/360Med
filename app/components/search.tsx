@@ -22,7 +22,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
     replace(`${pathname}?${params.toString()}`);
   }, 300);
   
-
+  /*
   function DropdownCombobox() {
     const [inputItems, setInputItems] = useState([])
     const [input, setInput] = useState('');
@@ -45,7 +45,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
       items: inputItems,
       onInputValueChange: async ({inputValue}) => {
         setInput(inputValue);
-        let result = handleSuggest(inputValue);
+        //let result = handleSuggest(inputValue);
       },
       onSelectedItemChange({ selectedItem }) {
         handleSearch(selectedItem);
@@ -79,11 +79,23 @@ export default function Search({ placeholder }: { placeholder: string }) {
       </div>
     )
   }
+  */
   
 
   return (
     <div className={styles.search}>
-      <DropdownCombobox  />
+      <input 
+      id = {styles.search} 
+      placeholder = {placeholder}
+      />
+      <button id={styles.button} onClick={() => {
+        let q = (document.getElementById(styles.search) as HTMLInputElement).value;
+        if (q) {
+          handleSearch(q)
+        }
+        }}>
+      <div id={styles.search_icn}>&#9906;</div>
+      </button>
     </div>
   );
 }

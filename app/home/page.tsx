@@ -12,8 +12,7 @@ import {
 } from 'chart.js';
 import { useEffect, useState, Suspense } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Map } from '../components';
-import { Search } from '../components';
+import { Map, Search, SearchResult } from '../components';
 
 ChartJS.register(
   CategoryScale,
@@ -72,6 +71,7 @@ export default function Home({
   });
   const [showList1, setShowList1] = useState(false);
   const [showList2, setShowList2] = useState(false);
+  const [showMap, setShowMap] = useState(false);
 
   const reset = () => {
     setShowList1(false);
@@ -92,15 +92,11 @@ export default function Home({
     )
   };
 
-  const searchCPT = async () => {
-    const lowerCaseSearchContent = searchContent.toLowerCase();
-    let temp = fetch('http://localhost:5050/cpt/search?search=' + lowerCaseSearchContent)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setSearchResult(data);
-    });
-
-    setSearchContent('');
+  const handleSelect = () => {
+    let select = (document.getElementsByName("chart_type")[0] as HTMLSelectElement).selectedIndex;
+    if (select == 4) {
+      setShowMap(true);
+    }
   }
 
   return (
@@ -132,7 +128,7 @@ export default function Home({
             <option value="medicine">Medicine</option>
             <option value="map">Heat Map</option>
           </select>
-          <select className={styles.f_btn} name="chart_type">
+          <select className={styles.f_btn} name="chart_type" onChange={handleSelect}>
             <option value="" disabled selected>Chart Type</option>
             <option value="bar">Bar Graph</option>
             <option value="line">Line Graph</option>
@@ -169,10 +165,13 @@ export default function Home({
           id={styles.vis}
           height={140}
           width={300}
-          /> */}
+          /> */} 
+        
+        <div style={{display: showMap ? 'block' : 'none'}}>
         <Suspense key={query + currentPage} fallback={<div>loading...</div>}>
           <Map query={query} currentPage={currentPage} />
         </Suspense>
+        </div>
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
         {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
         <h2>Clinical Trials</h2>

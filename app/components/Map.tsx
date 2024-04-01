@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
-import { scaleQuantize } from "d3-scale";
+import * as d3 from "d3";
 import * as topojson from "topojson-client";
-import mapdata from "../../../public/counties-10m.json"
+import mapdata from "../../public/counties-10m.json"
 
-const colorScale = scaleQuantize()
-  .domain([1, 1000])
-  .range([
-    "#ffedea",
-    "#ffcec5",
-    "#ffad9f",
-    "#ff8a75",
-    "#ff5533",
-    "#e2492d",
-    "#be3d26",
-    "#9a311f",
-    "#782618"
-  ]);
+const colorScale = d3.scaleQuantize();
+colorScale.domain([1300,1500]);
+colorScale.range(d3.schemeBlues[5]);
 
 export default async function Map ({
   query,
@@ -25,7 +15,8 @@ export default async function Map ({
   query: string;
   currentPage: number;
 }) {
-  let [items, setItems] = useState(query);
+  let [items, setItems] = useState([]);
+  let [label, setLabel] = useState('');
   
   useEffect(() => {
     if (query == '') {
@@ -45,6 +36,8 @@ export default async function Map ({
   }, []);
 
   return (
+    <div>
+    <div id="label" />
     <ComposableMap
       projection='geoAlbersUsa'
       fill='white'
@@ -71,11 +64,28 @@ export default async function Map ({
                   key={geo.rsmKey}
                   geography={geo}
                   fill={colorScale(cur ? cur["Facility Fee Schedule Amount"] : 1)}
+                  onClick={() => {
+                    try {
+                      document.getElementById("label").innerText = geo.properties.name + " " + String(cur["Facility Fee Schedule Amount"]);
+                    } catch {}
+                    }}
+                  style={{
+                    default: {
+                      outline: "none"
+                    },
+                    hover: {
+                      outline: "none"
+                    },
+                    pressed: {
+                      outline: "none"
+                    }
+                  }}
                 />
               );
           });
         }}
       </Geographies>
     </ComposableMap>
+    </div>
   );
 };
