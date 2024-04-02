@@ -3,6 +3,23 @@ Junior Design Project for Team JID-3357
 
 Our project allows medical researchers to learn about project cost before embarking on a project by compiling data from various databases.
 
+## v.0.4.0
+
+### Features
+- Implemented Google sign in functionality
+- Slight UI improvements
+- Minor bug fixes
+
+### Bug fixes
+- Fixed map bugs
+
+### Known Issues
+- Main page is not fully implemented yet
+- Google sign in request is sometimes rejected
+- Redirect URL unavailable due to non-HTTPS webpage
+
+
+
 ## v.0.3.0
 
 ### Features
