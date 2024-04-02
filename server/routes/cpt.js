@@ -50,14 +50,20 @@ router.get("/search", async (req, res) => {
     else res.send(result).status(200);
   });
 
-// Get a single code by id
-router.get("/:id", async (req, res) => {
-  client = new MongoClient(URI, { useNewUrlParser: true });
-  const cursor = await client.db("med-data").collection("cpt");
-  let query = {_id: ObjectId(req.params.id)};
-  let result = await cursor.findOne(query);
-  
-  await client.close();
+
+router.get("/suggest", async (req, res) => {
+  let codeList = await axios({
+    method: "get",
+    url: 'https://uts-ws.nlm.nih.gov/rest/search/current',
+    params: {
+        'string': String(req.body[search]),
+        'apiKey': process.env.THES_KEY,
+        'sabs': 'CPT',
+        'returnIdType':'code',
+        'pageSize': 5
+    },
+  });
+  let result = codeList['data']['result']['results'];
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
 });
