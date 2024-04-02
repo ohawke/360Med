@@ -16,6 +16,9 @@ Our project allows medical researchers to learn about project cost before embark
 ### Known Issues
 - Main page is not fully implemented yet
 - Google sign in request is sometimes rejected
+- Redirect URL unavailable due to non-HTTPS webpage
+
+
 
 ## v.0.3.0
 
