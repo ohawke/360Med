@@ -9,9 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
+    "@types/axios": "^0.14.0",
+    "axios": "^1.6.8",
     "chart.js": "^4.4.0",
     "d3-scale": "^4.0.2",
+    "dotenv": "^16.4.5",
+    "googleapis": "^134.0.0",
     "next": "14.0.3",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",

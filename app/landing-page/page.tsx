@@ -31,7 +31,7 @@ export default function LandingPage() {
           <h1 className={styles.title}>Medical Datasets Made <span className={styles.understandable}>understandable</span>.</h1>
           <p className={styles.subtitle}>Take the first step towards unlocking the vast world of medical knowledge. We make searching through medical data simple and stress-free by replacing tables of data into straightforward visualizations.</p>
           <p> _</p>
-          <Link href="/home" className={styles.startButton}>Start Now</Link>
+          <Link href="/api/auth/signin" className={styles.startButton}>Start Now</Link>
         </div>
         <div className={styles.graphBlock}>
         <img
