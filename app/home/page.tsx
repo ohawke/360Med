@@ -166,7 +166,7 @@ export default function Home({
           height={140}
           width={300}
           /> */} 
-        <SearchResult query={query} currentPage={currentPage}/>
+        {<SearchResult query={query} currentPage={currentPage}/>}
         <div style={{display: showMap ? 'block' : 'none'}}>
         <Suspense key={query + currentPage} fallback={<div>loading...</div>}>
           <Map query={query} currentPage={currentPage} />
