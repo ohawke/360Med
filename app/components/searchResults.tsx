@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default async function SearchResult ({
+export default function SearchResult ({
     query,
     currentPage,
   }: {
@@ -15,7 +15,7 @@ export default async function SearchResult ({
       }
       const lowerCaseSearchContent = query.toLowerCase();
       try {
-        let temp = fetch('http://localhost:5050/cpt/suggest?search=' + lowerCaseSearchContent)
+        let temp = fetch('http://localhost:5050/cpt/search?search=' + lowerCaseSearchContent)
         .then((resp) => resp.json())
         .then((data) => {
           setItems(data);
@@ -23,13 +23,13 @@ export default async function SearchResult ({
       } catch {
         alert("failed to fetch");
       }
-      console.log(items);
+      console.log("hit");
     }, []);
     return (
         <div>
         <ul>
             {items.map((result: any) => (
-            <li key={result.ui}>{result.name}</li>
+            <li key={result.id}>{result.name}</li>
             ))}
         </ul>
         </div>

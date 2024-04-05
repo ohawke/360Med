@@ -159,14 +159,14 @@ export default function Home({
           </select>
         </div>
       <div className={styles.main}>
-        {/* <h1 className={styles.h1}>Mortality Rate of TAVR from 2013 to 2022</h1> */}
+        {/*<h1 className={styles.h1}>Enter a search term to begin!</h1>*/}
         {/* <Bar 
           data={data} 
           id={styles.vis}
           height={140}
           width={300}
           /> */} 
-        
+        <SearchResult query={query} currentPage={currentPage}/>
         <div style={{display: showMap ? 'block' : 'none'}}>
         <Suspense key={query + currentPage} fallback={<div>loading...</div>}>
           <Map query={query} currentPage={currentPage} />

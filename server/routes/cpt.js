@@ -41,9 +41,7 @@ router.get("/search", async (req, res) => {
         }
         let finalQuery = Object.assign({"CPT/HCPCS Code": outputJson[code]['ui']}, query);
         let hit = await cursor.find(finalQuery).toArray();
-        for (item in hit) {
-          result.push(Object.assign(hit[item], {'name': outputJson[code]['name']}));
-        }
+        result.push({'name': outputJson[code]['name'], 'codes': hit});
     }
     await client.close();
     if (!result) res.send("Not found").status(404);
@@ -56,7 +54,7 @@ router.get("/suggest", async (req, res) => {
     method: "get",
     url: 'https://uts-ws.nlm.nih.gov/rest/search/current',
     params: {
-        'string': String(req.body[search]),
+        'string': String(req.body["search"]),
         'apiKey': process.env.THES_KEY,
         'sabs': 'CPT',
         'returnIdType':'code',
@@ -64,6 +62,7 @@ router.get("/suggest", async (req, res) => {
     },
   });
   let result = codeList['data']['result']['results'];
+  console.log("wow");
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
 });
