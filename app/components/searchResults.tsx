@@ -42,7 +42,7 @@ export default function SearchResult ({
       const lowerCaseSearchContent = query.toLowerCase();
       getItems(lowerCaseSearchContent);
       console.log("hit");
-    }, []);
+    }, [query]);
     return (
         <div id = "result">
         <ul>
