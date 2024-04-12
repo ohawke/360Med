@@ -15,8 +15,6 @@ export default async function Map ({
 }) {
   let [items, setItems] = useState([]);
   let [label, setLabel] = useState('');
-  const colorScale = d3.scaleQuantize()
-    .range(d3.schemeBlues[5]);
   
   useEffect(() => {
     if (query == '') {
@@ -28,12 +26,6 @@ export default async function Map ({
       .then((resp) => resp.json())
       .then((data) => {
         setItems(data);
-        let domain = data.map(a => a["Facility Fee Schedule Amount"]);
-        let extent = d3.extent(domain);
-        colorScale.domain(extent);
-        console.log(domain);
-        console.log(extent);
-
       });
     } catch {
       alert("failed to fetch");
@@ -53,6 +45,9 @@ export default async function Map ({
     >
       <Geographies geography={mapdata}>
         {(geographies: any) => {
+          const colorScale = d3.scaleLinear()
+          .range([d3.schemeBlues[5][0], d3.schemeBlues[5][4]])
+          .domain(d3.extent(items.map(a => a["Facility Fee Schedule Amount"])));
           return geographies.geographies.map((geo: any) => {
             let cur;
             try {
