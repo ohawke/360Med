@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-export default async function SearchResult ({
+export default function SearchResult ({
     query,
     currentPage,
   }: {
@@ -8,14 +9,23 @@ export default async function SearchResult ({
     currentPage: number;
   }) {
     let [items, setItems] = useState([]);
-    
-    useEffect(() => {
-      if (query == '') {
-        return;
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();  
+
+    const handleSearch = (term: string) => {
+      const params = new URLSearchParams(searchParams);
+      if (term) {
+        params.set('query', term);
+      } else {
+        params.delete('query');
       }
-      const lowerCaseSearchContent = query.toLowerCase();
+      replace(`${pathname}?${params.toString()}`);
+    };
+
+    const getItems = async (term: string) => {
       try {
-        let temp = fetch('http://localhost:5050/cpt/suggest?search=' + lowerCaseSearchContent)
+        let temp = fetch('http://localhost:5050/cpt/suggest?search=' + term)
         .then((resp) => resp.json())
         .then((data) => {
           setItems(data);
@@ -23,13 +33,23 @@ export default async function SearchResult ({
       } catch {
         alert("failed to fetch");
       }
-      console.log(items);
-    }, []);
+    }
+    
+    useEffect(() => {
+      if (query == '') {
+        return;
+      }
+      const lowerCaseSearchContent = query.toLowerCase();
+      getItems(lowerCaseSearchContent);
+      console.log("hit");
+    }, [query]);
     return (
-        <div>
+        <div id = "result">
         <ul>
             {items.map((result: any) => (
-            <li key={result.ui}>{result.name}</li>
+            <li key={result.ui} onClick = {(e) => {handleSearch((e.target as HTMLLIElement).innerText);
+              document.getElementById("result").classList.add('hidden');
+            }}>{result.name}</li>
             ))}
         </ul>
         </div>

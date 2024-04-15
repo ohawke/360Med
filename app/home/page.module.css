@@ -133,6 +133,9 @@
     .h1 {
         font-size: 2vw;
         margin-bottom: 1vh;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
     #vis {
         background-color: white;

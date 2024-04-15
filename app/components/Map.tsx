@@ -4,9 +4,7 @@ import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import mapdata from "../../public/counties-10m.json"
 
-const colorScale = d3.scaleQuantize();
-colorScale.domain([1300,1500]);
-colorScale.range(d3.schemeBlues[5]);
+
 
 export default async function Map ({
   query,
@@ -32,11 +30,12 @@ export default async function Map ({
     } catch {
       alert("failed to fetch");
     }
-    console.log(items);
+    
   }, []);
 
   return (
     <div>
+    <div>Medicare Physician Fee Schedule Amount:</div>
     <div id="label" />
     <ComposableMap
       projection='geoAlbersUsa'
@@ -46,6 +45,9 @@ export default async function Map ({
     >
       <Geographies geography={mapdata}>
         {(geographies: any) => {
+          const colorScale = d3.scaleLinear()
+          .range([d3.schemeBlues[5][0], d3.schemeBlues[5][4]])
+          .domain(d3.extent(items.map(a => a["Facility Fee Schedule Amount"])));
           return geographies.geographies.map((geo: any) => {
             let cur;
             try {
@@ -63,10 +65,10 @@ export default async function Map ({
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  fill={colorScale(cur ? cur["Facility Fee Schedule Amount"] : 1)}
+                  fill={colorScale(cur ? cur["Facility Fee Schedule Amount"] : 0)}
                   onClick={() => {
                     try {
-                      document.getElementById("label").innerText = geo.properties.name + " " + String(cur["Facility Fee Schedule Amount"]);
+                      document.getElementById("label").innerText = geo.properties.name + ": $" + String(cur["Facility Fee Schedule Amount"]);
                     } catch {}
                     }}
                   style={{

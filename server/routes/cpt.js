@@ -52,17 +52,15 @@ router.get("/search", async (req, res) => {
 
 
 router.get("/suggest", async (req, res) => {
-  let codeList = await axios({
-    method: "get",
-    url: 'https://uts-ws.nlm.nih.gov/rest/search/current',
-    params: {
-        'string': String(req.body[search]),
-        'apiKey': process.env.THES_KEY,
-        'sabs': 'CPT',
-        'returnIdType':'code',
-        'pageSize': 5
-    },
-  });
+  let query = {};    
+    for(var key in req.body){ 
+      if (key == 'search') {
+        continue;
+      } else {
+        req.body[key] !== "" ? query[key] = req.body[key] : null;
+      }
+    }
+  let codeList = await (convertToCPT(req.query.search));
   let result = codeList['data']['result']['results'];
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
