@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image'
-import styles from './landing-page.module.css'; // make sure to create this CSS module
+import styles from './search-page.module.css'; // make sure to create this CSS module
 
 export default function LandingPage() {
   return (
@@ -28,17 +28,13 @@ export default function LandingPage() {
 
       <main className={styles.main}>
         <div className={styles.titleBlock}>
-          <h1 className={styles.title}>Medical Datasets Made <span className={styles.understandable}>understandable</span>.</h1>
-          <p className={styles.subtitle}>Take the first step towards unlocking the vast world of medical knowledge. We make searching through medical data simple and stress-free by replacing tables of data into straightforward visualizations.</p>
-          <p> _</p>
-          {/* <Link href="/api/auth/signin" className={styles.startButton}>Start Now</Link> */}
-          <Link href="/search" className={styles.startButton}>Start Now</Link>
+          <h1 className={styles.title}>Welcome, <span className={styles.understandable}>User</span></h1>
         </div>
-        <div className={styles.graphBlock}>
-        <img
-            src="/graph_example.png" 
-            alt="Graph"
-            className={styles.graphImage}/>
+        <div className={styles.searchContainer}>
+          <input type="text" placeholder="Heart Disease Death Rate" className={styles.searchInput}/>
+          <button className={styles.searchButton}>
+            <img src="/search-icon.png" alt="Search" />
+          </button>
         </div>
       </main>
 
