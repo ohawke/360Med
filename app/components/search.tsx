@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';  // Correct imports based on your use case
 import { useDebouncedCallback } from 'use-debounce'; // Ensure you have this package if using useDebouncedCallback
 import styles from '../home/page.module.css';
@@ -24,11 +24,9 @@ export default function Search({ placeholder }: { placeholder: string }) {
     setInputValue(event.target.value);
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // Prevent the form from submitting and reloading the page
+  const handleSubmit = (e: FormEvent) => {
+      e.preventDefault(); // Prevent the form from submitting and reloading the page
       handleSearch(inputValue);
-    }
   };
 
   const handleButtonClick = () => {
@@ -36,17 +34,16 @@ export default function Search({ placeholder }: { placeholder: string }) {
   };
 
   return (
-    <div className={styles.search}>
+    <form className={styles.search} onSubmit={handleSubmit}>
       <input 
         id={styles.search}
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}
-        onKeyPress={handleKeyPress}
       />
       <button id={styles.button} onClick={handleButtonClick}>
         <div id={styles.search_icn}>&#9906;</div>
       </button>
-    </div>
+    </form>
   );
 }
