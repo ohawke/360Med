@@ -1,9 +1,42 @@
+"use client";
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image'
-import styles from './search-page.module.css'; // make sure to create this CSS module
+import styles from './search-page.module.css'; 
+import React, { useState, FormEvent} from 'react';
+import { useSearchParams, useRouter, usePathname} from 'next/navigation';
 
 export default function LandingPage() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { push } = useRouter();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    handleSearch(searchTerm);
+  };
+
+  function handleSearch(term: string) {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+    push(`/home?${params.toString()}`);
+  }
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   // Redirect to the original page with the search term in the query parameter.
+  //   push(`/home?query=${encodeURIComponent(searchTerm)}`);
+  // };
+
   return (
     <div className={styles.page}>
       <Head>
@@ -30,12 +63,12 @@ export default function LandingPage() {
         <div className={styles.titleBlock}>
           <h1 className={styles.title}>Welcome, <span className={styles.understandable}>User</span></h1>
         </div>
-        <div className={styles.searchContainer}>
-          <input type="text" placeholder="Heart Disease Death Rate" className={styles.searchInput}/>
+        <form className={styles.searchContainer} onSubmit={handleSubmit}>
+          <input type="text" placeholder="Heart Disease Death Rate" className={styles.searchInput} onChange={(e) => {handleInputChange}} defaultValue={searchParams.get('query')?.toString()}/>
           <button className={styles.searchButton}>
             <img src="/search-icon.png" alt="Search" />
           </button>
-        </div>
+        </form>
       </main>
 
       <footer className={styles.footer}>
