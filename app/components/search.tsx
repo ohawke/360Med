@@ -1,16 +1,14 @@
 'use client';
-
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
-import React, { useState } from "react";
+import { useState } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';  // Correct imports based on your use case
+import { useDebouncedCallback } from 'use-debounce'; // Ensure you have this package if using useDebouncedCallback
 import styles from '../home/page.module.css';
-import {useCombobox} from 'downshift';
-
 
 export default function Search({ placeholder }: { placeholder: string }) {
+  const [inputValue, setInputValue] = useState('');
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();  
+  const { replace } = useRouter();
 
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
@@ -21,80 +19,33 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
-  
-  /*
-  function DropdownCombobox() {
-    const [inputItems, setInputItems] = useState([])
-    const [input, setInput] = useState('');
 
-    const handleSuggest = useDebouncedCallback((term: string) => {
-      fetch('http://localhost:5050/cpt/suggest?search=' + term.toLowerCase())
-        .then((resp) => resp.json())
-        .then((data) => setInputItems(data));
-    }, 300);
-    
-    const {
-      isOpen,
-      getToggleButtonProps,
-      getLabelProps,
-      getMenuProps,
-      getInputProps,
-      highlightedIndex,
-      getItemProps,
-    } = useCombobox({
-      items: inputItems,
-      onInputValueChange: async ({inputValue}) => {
-        setInput(inputValue);
-        //let result = handleSuggest(inputValue);
-      },
-      onSelectedItemChange({ selectedItem }) {
-        handleSearch(selectedItem);
-      },
-    })
-    return (
-      <div>
-        <div>
-          <input {...getInputProps()} />
-          <button
-            type="button"
-            {...getToggleButtonProps()}
-          >
-          <div id={styles.search_icn}>&#9906;</div>
-          </button>
-        </div>
-        <ul {...getMenuProps()}>
-          {isOpen &&
-            inputItems.map((item, index) => (
-              <li
-                style={
-                  highlightedIndex === index ? {backgroundColor: '#bde4ff'} : {}
-                }
-                key={`${item}${index}`}
-                {...getItemProps({item, index})}
-              >
-                {item}
-              </li>
-            ))}
-        </ul>
-      </div>
-    )
-  }
-  */
-  
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent the form from submitting and reloading the page
+      handleSearch(inputValue);
+    }
+  };
+
+  const handleButtonClick = () => {
+    handleSearch(inputValue);
+  };
 
   return (
     <div className={styles.search}>
       <input 
-      id = {styles.search} 
-      placeholder = {placeholder}
+        id={styles.search}
+        placeholder={placeholder}
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
       />
-      <button id={styles.button} onClick={() => {
-        let q = (document.getElementById(styles.search) as HTMLInputElement).value;
-        if (q) {
-          handleSearch(q)
-        }
-        }}>
-      <div id={styles.search_icn}>&#9906;</div>
+      <button id={styles.button} onClick={handleButtonClick}>
+        <div id={styles.search_icn}>&#9906;</div>
       </button>
     </div>
   );

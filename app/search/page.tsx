@@ -12,24 +12,24 @@ export default function LandingPage() {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearchTerm(e.target.value);
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
-  // const handleSubmit = (e: FormEvent) => {
-  //   e.preventDefault(); // Prevent the default form submission behavior
-  //   handleSearch(searchTerm);
-  // };
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    handleSearch(searchTerm);
+  };
 
-  // function handleSearch(term: string) {
-  //   const params = new URLSearchParams(searchParams);
-  //   if (term) {
-  //     params.set('query', term);
-  //   } else {
-  //     params.delete('query');
-  //   }
-  //   replace(`/home?${params.toString()}`);
-  // }
+  function handleSearch(term: string) {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+    push(`/home?${params.toString()}`);
+  }
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -63,12 +63,12 @@ export default function LandingPage() {
         <div className={styles.titleBlock}>
           <h1 className={styles.title}>Welcome, <span className={styles.understandable}>User</span></h1>
         </div>
-        {/* <form className={styles.searchContainer} onSubmit={handleSubmit}>
+        <form className={styles.searchContainer} onSubmit={handleSubmit}>
           <input type="text" placeholder="Heart Disease Death Rate" className={styles.searchInput} onChange={(e) => {handleInputChange}} defaultValue={searchParams.get('query')?.toString()}/>
           <button className={styles.searchButton}>
             <img src="/search-icon.png" alt="Search" />
           </button>
-        </form> */}
+        </form>
       </main>
 
       <footer className={styles.footer}>
