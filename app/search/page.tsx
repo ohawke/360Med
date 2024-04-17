@@ -17,7 +17,7 @@ export default function LandingPage() {
   };
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault(); 
     handleSearch(searchTerm);
   };
 
@@ -34,12 +34,6 @@ export default function LandingPage() {
   const handleButtonClick = () => {
     handleSearch(searchTerm);
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Redirect to the original page with the search term in the query parameter.
-  //   push(`/home?query=${encodeURIComponent(searchTerm)}`);
-  // };
 
   return (
     <div className={styles.page}>
@@ -68,7 +62,7 @@ export default function LandingPage() {
           <h1 className={styles.title}>Welcome, <span className={styles.understandable}>User</span></h1>
         </div>
         <form className={styles.searchContainer} onSubmit={handleSubmit}>
-          <input type="text" placeholder="Heart Disease Death Rate" className={styles.searchInput} onChange={(e) => {handleInputChange}} defaultValue={searchParams.get('query')?.toString()}/>
+          <input type="text" placeholder="Heart Disease Death Rate" className={styles.searchInput} value={searchTerm} onChange={handleInputChange}/>
           <button className={styles.searchButton} onClick={handleButtonClick}>
             <img src="/search-icon.png" alt="Search" />
           </button>
