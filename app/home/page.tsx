@@ -102,7 +102,7 @@ export default function Home({
   return (
     <main className={styles.body}>
       <div className={styles.header}>
-        <a className={styles.logo_img} href='/landing-page'>
+        <a className={styles.logo_img} href='/search'>
           <Image
             src="/logo.png" 
             alt="360Med"
