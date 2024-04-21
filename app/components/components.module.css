@@ -1,0 +1,98 @@
+/* pages/new-page.module.css */
+  
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  
+  .logo {
+    font-weight: bold;
+  }
+
+  .resultsList {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ddd;
+  }
+
+  .resultItem {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .titleBlock {
+    margin-bottom: 0.25rem;
+    max-width: 80%;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 4rem;
+  }
+  
+  .understandable {
+    text-decoration: underline;
+    color: #388087
+  }
+  
+  .searchInput {
+    width: 60vh; /* Adjust the width as necessary */
+    height: 40px; /* Adjust the height as necessary */
+    padding: 0 15px; /* Add padding inside the input field */
+    font-size: 1rem; /* Adjust the font size within the input field as necessary */
+    border: 2px solid #6FB3B8; /* Optional: adds a border */
+    border-radius: 15px; /* Optional: rounds the corners of the input field */
+  
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    outline: none;
+  }
+
+  .searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    gap: 10px; /* This adds space between the input and button */
+  }
+
+  .searchButton {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    /* Adjust the size of the button as needed to fit the search icon size */
+    width: 25px; /* Example button width, adjust as needed */
+    height: 25px; /* Match input height for alignment */
+    cursor: pointer;
+  }
+
+  .searchButton img {
+    max-width: 100%;
+    min-width: 100%;
+  }
+  
+  .footer {
+    padding: 20px;
+    background-color: #f0f0f0;
+    text-align: center;
+  }
+  
+  .footer a {
+    margin: 10px;
+    text-decoration: none;
+    color: #333;
+  }

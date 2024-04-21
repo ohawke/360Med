@@ -42,7 +42,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         onChange={handleInputChange}
       />
       <button id={styles.button} onClick={handleButtonClick}>
-        <div id={styles.search_icn}>&#9906;</div>
+        <img src="/search-icon.png" alt="Search" width={25}/>
       </button>
     </form>
   );

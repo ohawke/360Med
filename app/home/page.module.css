@@ -82,7 +82,7 @@
     z-index: 5;
     grid-row: 2 / 3;
     border-style: solid none solid none;
-    background-color: #D3D3D3;
+    background-color: #ffffff;
     border-color: #BEBEBE;
     border-width: 2px;
     list-style: none;
@@ -104,7 +104,7 @@
     }
     .f_btn {
         height: 4vh;
-        background-color: #D3D3D3;
+        background-color: #ffffff;
         border: none;
         margin: auto;
         font-size: 1vw;
