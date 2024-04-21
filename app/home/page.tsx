@@ -23,23 +23,6 @@ ChartJS.register(
   Legend
 );
 
-async function functest(e: any) {
-  if (document.getElementById(styles.search)) {
-    //let searchedFor = document.getElementById(styles.search).value;
-    let temp = await fetch('http://localhost:5050/cpt')
-    console.log(temp)
-  }
-}
-
-/*
-async function searchCPT(e: any) {
-  if (document.getElementById(styles.search)) {
-    let searchedFor = document.getElementById(styles.search).value;
-    let temp = await fetch('http://localhost:5050/cpt/search/search?=' + searchedFor)
-    console.log(temp)
-  }
-}
-*/
 
 export default function Home({
     searchParams,
@@ -73,28 +56,9 @@ export default function Home({
   const [showList2, setShowList2] = useState(false);
   const [showMap, setShowMap] = useState(false);
 
-  const reset = () => {
-    setShowList1(false);
-    setShowList2(false);
-  };
-  const [result, setResult] = useState<string | undefined>();
-  const search = () => {
-    const lowerCaseSearchContent = searchContent.toLowerCase();
-    //const [result, setResult] = useState<string | undefined>();
-    pullData(lowerCaseSearchContent).then(data => {
-      setResult(data);
-    });
-    return (
-      <div>
-        <button onClick={search}>Search</button>
-        {result && <div id="result">{result}</div>}
-      </div>
-    )
-  };
-
   const handleSelect = () => {
     let select = (document.getElementsByName("chart_type")[0] as HTMLSelectElement).selectedIndex;
-    if (select == 4) {
+    if (select == 1) {
       setShowMap(true);
     }
   }
@@ -123,49 +87,15 @@ export default function Home({
           <div className={styles.f_btn} id={styles.f_label}>Filter</div>
           <select className={styles.f_btn} name="data_type">
             <option value="" disabled selected>Data Type</option>
-            <option value="mortality">Mortality Rate</option>
+            <option value="mortality">CPT Code</option>
             <option value="clinical">Clinical Trials</option>
-            <option value="medicine">Medicine</option>
-            <option value="map">Heat Map</option>
           </select>
           <select className={styles.f_btn} name="chart_type" onChange={handleSelect}>
             <option value="" disabled selected>Chart Type</option>
-            <option value="bar">Bar Graph</option>
-            <option value="line">Line Graph</option>
-            <option value="pie">Pie Chart</option>
             <option value="map">Heat Map</option>
           </select>
-          {/* <div><button className={styles.f_btn} id={styles.collapse}>Range</button>
-            <div className={styles.f_content}>x</div>
-            <div className={styles.f_content}>y</div>
-          </div> */}
-          <select className={styles.f_btn}>
-            <option value="" disabled selected>Range</option>
-          </select>
-          <select className={styles.f_btn}>
-            <option>Option 2</option>
-          </select>
-          <select className={styles.f_btn}>
-            <option>Option 3</option>
-          </select>
-          <select className={styles.f_btn}>
-            <option>Option 4</option>
-          </select>
-          {/* <select className={styles.f_btn}>
-            <option>Option 5</option>
-          </select>
-          <select className={styles.f_btn}>
-            <option>Option 6</option>
-          </select> */}
         </div>
       <div className={styles.main}>
-        {/*<h1 className={styles.h1}>Enter a search term to begin!</h1>*/}
-        {/* <Bar 
-          data={data} 
-          id={styles.vis}
-          height={140}
-          width={300}
-          /> */} 
         {<SearchResult query={query} currentPage={currentPage}/>}
         <div style={{display: showMap ? 'block' : 'none'}}>
         <Suspense key={query + currentPage} fallback={<div>loading...</div>}>
@@ -173,8 +103,6 @@ export default function Home({
         </Suspense>
         </div>
         <div className={styles.list1} style={{display: showList1 ? 'block' : 'none'}}>
-        {/* All clinical trial data is pulled from the script provided in the ClinicalTrialsHelper.txt file. Data is manually pulled for the sake of demo*/}
-        <h2>Clinical Trials</h2>
       </div>
       </div>
       <div className={styles.footer}>
@@ -196,103 +124,5 @@ export default function Home({
     </main>
   )
 }
-function cleanData(rawData: string) {
-  rawData = rawData.replaceAll("<FieldValue>", "");
-  rawData = rawData.replaceAll("</Field>", "");
-  rawData = rawData.replaceAll("<FieldList>", "");
-  rawData = rawData.replaceAll("</FieldList>", "");
-  rawData = rawData.replaceAll("</FieldValue>", "");
-  rawData = rawData.replaceAll("</Field>", "");
-  rawData = rawData.replaceAll("<StudyFieldsList>", "");
-  rawData = rawData.replaceAll("<StudyFields>", "");
-  rawData = rawData.replaceAll("<FieldValues>", "");
-  rawData = rawData.replaceAll("</FieldValues>", "");
-  rawData = rawData.replaceAll("<StudyFields Rank='1'>\n", "");
-  //rawData = rawData.replaceAll("<FieldValues Field='BriefTitle">'', "");
-  rawData = rawData.replaceAll("<FieldValues Field='Condition'>", "");
-  //rawData = rawData.replaceAll("<FieldValues Field='BriefSummary">'', "");
-  rawData = rawData.replaceAll("</StudyFieldsList>", "");
-  rawData = rawData.replaceAll("</StudyFields>", "");
-  rawData = rawData.replaceAll("</StudyFieldsResponse>", "");
-  rawData = rawData.replaceAll(":", "");
-  return rawData;
-}
-
-async function apiRequest(fields: string, input: string) {
-  try {
-      let url;
-      if (fields) {
-          url = `https://classic.clinicaltrials.gov/api/query/study_fields?expr=${input}&fields=BriefTitle%2CCondition%2CBriefSummary%2C${fields}&min_rnk=1&max_rnk=10&fmt=xml`;
-      } else {
-          url = `https://classic.clinicaltrials.gov/api/query/study_fields?expr=${input}&fields=BriefTitle%2CCondition%2CBriefSummary&min_rnk=1&max_rnk=10&fmt=xml`;
-      }
-
-      const response = await fetch(url);
-
-      const data = await response.text();
-
-      return data;
-  } catch (error) {
-      console.log(error);
-      return "Invalid request";
-
-  }
-}
-async function printData(lines: string | any[], fields: any) {
-
-  if (lines.length < 4) {
-      console.log("Error: lines array must have at least 4 elements");
-      return;
-  }
-
-  for (let i = 13; i < lines.length; i++) {
-      if (i >= lines.length - 1) {
-          break;
-      }
-
-      if (lines[i].includes("BriefSummary") || lines[i].includes("BriefTitle") || lines[i].includes(fields)) {
-
-          if (lines[i].includes("BriefTitle")) {
-              console.log("Study Title: ");
-          } else if (lines[i].includes("BriefSummary")) {
-              console.log("Study Summary: ");
-          }
-
-          try {
-
-              let output = lines[i + 1];
-
-              if (output.length > 170) {
-                  console.log(output.substring(0, 170));
-                  let substring = output.substring(170);
-
-                  if (substring.length > 170) {
-                      console.log(substring.substring(0, 170));
-                      console.log(substring.substring(170) + "\n");
-                  } else {
-                      console.log(substring + "\n");
-                  }
-              } else {
-                  console.log(lines[i + 1]);
-              }
-
-          } catch (error) {
-              console.log("Error printing output");
-          }
-      }
-  }
-}
-
-  async function pullData(searchTerm: string) {
-
-      searchTerm = searchTerm.replace(/\s/g, '%20');
-
-      const apiData = await apiRequest("", searchTerm);
-
-      const cleanedData = cleanData(apiData);
-
-      return cleanedData;
-
-  }
 
 

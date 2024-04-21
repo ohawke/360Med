@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import styles from './components.module.css'; 
 
 export default function SearchResult ({
     query,
@@ -11,7 +12,7 @@ export default function SearchResult ({
     let [items, setItems] = useState([]);
     const searchParams = useSearchParams();
     const pathname = usePathname();
-    const { replace } = useRouter();  
+    const { replace, push } = useRouter();  
 
     const handleSearch = (term: string) => {
       const params = new URLSearchParams(searchParams);
@@ -20,7 +21,7 @@ export default function SearchResult ({
       } else {
         params.delete('query');
       }
-      replace(`${pathname}?${params.toString()}`);
+      push(`${pathname}?${params.toString()}`);
     };
 
     const getItems = async (term: string) => {
@@ -45,9 +46,9 @@ export default function SearchResult ({
     }, [query]);
     return (
         <div id = "result">
-        <ul>
+        <ul className={styles.resultsList}>
             {items.map((result: any) => (
-            <li key={result.ui} onClick = {(e) => {handleSearch((e.target as HTMLLIElement).innerText);
+            <li className = {styles.resultItem} key={result.ui} onClick = {(e) => {handleSearch((e.target as HTMLLIElement).innerText);
               document.getElementById("result").classList.add('hidden');
             }}>{result.name}</li>
             ))}

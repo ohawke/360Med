@@ -2,28 +2,21 @@ const express = require('express');
 //const db = require('../db/conn.js');
 const axios = require('axios');
 require('dotenv').config()
-const {ObjectId} = require('mongodb')
-const {MongoClient} = require('mongodb');
-const URI = process.env.ATLAS_URI || "";
-let client;
 
 const router = express.Router();
 
 // Get a list of 10 codes
 router.get("/", async (req, res) => {
-  client = new MongoClient(URI);
-  const cursor = await client.db("med-data").collection("cpt");
+  const cursor = req.app.locals.collection;
   let results = await cursor.find({})
     .limit(10)
     .toArray();
-  client.close();
   res.send(results).status(200);
 });
 
 // search cpt codes
 router.get("/search", async (req, res) => {
-    client = new MongoClient(URI);
-    const cursor = await client.db("med-data").collection("cpt");
+    const cursor = req.app.locals.collection;
     let query = {};    
     for(var key in req.body){ 
       if (key == 'search') {
@@ -45,7 +38,6 @@ router.get("/search", async (req, res) => {
           result.push(Object.assign(hit[item], {'name': outputJson[code]['name']}));
         }
     }
-    await client.close();
     if (!result) res.send("Not found").status(404);
     else res.send(result).status(200);
   });
