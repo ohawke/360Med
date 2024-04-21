@@ -25,7 +25,13 @@
     cursor: pointer;
   }
   .resultItem:hover {
-    background-color: #BEBEBE;
+    background-color: #388087;
+    color: white;
+  }
+
+  .resultItemSelect {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
   }
   
   .main {
