@@ -49,7 +49,8 @@ export default function SearchResult ({
         <ul className={styles.resultsList}>
             {items.map((result: any) => (
             <li className = {styles.resultItem} key={result.ui} onClick = {(e) => {handleSearch((e.target as HTMLLIElement).innerText);
-              document.getElementById("result").classList.add('hidden');
+            document.getElementById("result").classList.add('hidden');
+            e.target.className = styles.resultItemSelect;
             }}>{result.name}</li>
             ))}
         </ul>
