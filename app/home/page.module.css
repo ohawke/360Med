@@ -19,7 +19,8 @@
     padding: 1vh 1vw;
     position: fixed;
     width: 100%;
-    top: 1vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
 }
     #logo_img {
         grid-column: 5 / 8;
@@ -113,7 +114,7 @@
         color: white;
         border: none;
         margin: auto;
-        font-size: 1.1vw;
+        font-size: 21px;
         display: flex;
         justify-content: center;
         align-items: center;
