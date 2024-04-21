@@ -47,6 +47,7 @@ export default async function Map ({
         rotate: [97, -40, 0],
         scale: 800,
       }}
+      center={[0,8]}
     >
       <Geographies geography={mapdata}>
         {(geographies: any) => {
@@ -73,7 +74,7 @@ export default async function Map ({
                   fill={colorScale(cur ? cur["Facility Fee Schedule Amount"] : 0)}
                   onMouseEnter={() => {
                     try {
-                      document.getElementById("label").innerText = geo.properties.name + ": $" + String(cur["Facility Fee Schedule Amount"]);
+                      document.getElementById("label").innerText = geo.properties.name + " county: $" + String(cur["Facility Fee Schedule Amount"]);
                     } catch {}
                   }}
                 />

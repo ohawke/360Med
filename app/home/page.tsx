@@ -94,13 +94,6 @@ export default function Home({
             <option value="" disabled selected>Chart Type</option>
             <option value="map">Heat Map</option>
           </select>
-          {/* <div><button className={styles.f_btn} id={styles.collapse}>Range</button>
-            <div className={styles.f_content}>x</div>
-            <div className={styles.f_content}>y</div>
-          </div> */}
-          <select className={styles.f_btn}>
-            <option value="" disabled selected>Range</option>
-          </select>
         </div>
       <div className={styles.main}>
         {<SearchResult query={query} currentPage={currentPage}/>}
