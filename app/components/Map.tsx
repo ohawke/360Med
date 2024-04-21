@@ -30,18 +30,23 @@ export default async function Map ({
     } catch {
       alert("failed to fetch");
     }
+    console.log("map");
     
-  }, []);
+  }, [query]);
 
   return (
-    <div style={{zoom: 0.5}}>
+    <div>
     <div>Medicare Physician Fee Schedule Amount:</div>
     <div id="label" />
     <ComposableMap
       projection='geoAlbersUsa'
       fill='white'
       stroke='black'
-      stroke-width={1}
+      stroke-width={0.25}
+      projectionConfig={{
+        rotate: [97, -40, 0],
+        scale: 800,
+      }}
     >
       <Geographies geography={mapdata}>
         {(geographies: any) => {
@@ -66,21 +71,10 @@ export default async function Map ({
                   key={geo.rsmKey}
                   geography={geo}
                   fill={colorScale(cur ? cur["Facility Fee Schedule Amount"] : 0)}
-                  onClick={() => {
+                  onMouseEnter={() => {
                     try {
                       document.getElementById("label").innerText = geo.properties.name + ": $" + String(cur["Facility Fee Schedule Amount"]);
                     } catch {}
-                    }}
-                  style={{
-                    default: {
-                      outline: "none"
-                    },
-                    hover: {
-                      outline: "none"
-                    },
-                    pressed: {
-                      outline: "none"
-                    }
                   }}
                 />
               );

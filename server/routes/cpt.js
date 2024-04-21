@@ -2,10 +2,6 @@ const express = require('express');
 //const db = require('../db/conn.js');
 const axios = require('axios');
 require('dotenv').config()
-const {ObjectId} = require('mongodb')
-const {MongoClient} = require('mongodb');
-const URI = process.env.ATLAS_URI || "";
-let client;
 
 const router = express.Router();
 

@@ -58,7 +58,7 @@ export default function Home({
 
   const handleSelect = () => {
     let select = (document.getElementsByName("chart_type")[0] as HTMLSelectElement).selectedIndex;
-    if (select == 4) {
+    if (select == 1) {
       setShowMap(true);
     }
   }
