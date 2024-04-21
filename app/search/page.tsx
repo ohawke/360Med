@@ -44,7 +44,7 @@ export default function LandingPage() {
       
       <header className={styles.header}>
         <nav className={styles.nav}>
-          <div className={styles.logo}>360Med</div>
+          <a href='/landing-page'><div className={styles.logo}>360Med</div></a>
           <a className={styles.logo_img}>
           <Image
             src="/logo.png" 

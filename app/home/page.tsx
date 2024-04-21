@@ -151,12 +151,12 @@ export default function Home({
           <select className={styles.f_btn}>
             <option>Option 4</option>
           </select>
-          <select className={styles.f_btn}>
+          {/* <select className={styles.f_btn}>
             <option>Option 5</option>
           </select>
           <select className={styles.f_btn}>
             <option>Option 6</option>
-          </select>
+          </select> */}
         </div>
       <div className={styles.main}>
         {/*<h1 className={styles.h1}>Enter a search term to begin!</h1>*/}

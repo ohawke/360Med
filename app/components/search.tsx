@@ -1,7 +1,7 @@
 'use client';
 import { useState, FormEvent } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';  // Correct imports based on your use case
-import { useDebouncedCallback } from 'use-debounce'; // Ensure you have this package if using useDebouncedCallback
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 import styles from '../home/page.module.css';
 
 export default function Search({ placeholder }: { placeholder: string }) {
@@ -41,8 +41,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
         value={inputValue}
         onChange={handleInputChange}
       />
-      <button id={styles.button} onClick={handleButtonClick}>
-        <div id={styles.search_icn}>&#9906;</div>
+      <button className={styles.searchButton} onClick={handleButtonClick}>
+            <img src="/search-icon.png" alt="Search" />
       </button>
     </form>
   );
