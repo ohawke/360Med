@@ -30,9 +30,14 @@ export default async function Map ({
     } catch {
       alert("failed to fetch");
     }
+    
     console.log("map");
     
   }, [query]);
+
+  if (items.length == 0) {
+    return <div>no results found</div>
+  }
 
   return (
     <div>
