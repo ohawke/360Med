@@ -19,7 +19,7 @@
     padding: 1vh 1vw;
     position: fixed;
     width: 100%;
-    top: 0;
+    top: 1vh;
 }
     #logo_img {
         grid-column: 5 / 8;
@@ -33,16 +33,29 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
+        gap:1vh;
     }
     #search {
-        font-size: 1vw;
-        width: 25vw;
+        font-size: 1rem;
+        width: 30vw;
         height: 4vh;
         padding: 0vw 0.5vw;
-        border-radius: 12px;
-        border-color: #D3D3D3;
-        border-width: 1px;
+        border: 1.5px solid #6FB3B8;
+        border-radius: 6px;
     }
+    .searchButton {
+        padding: 0;
+        margin: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        width: 3vh;
+        height: 3vh;
+    }
+    .searchButton img {
+        max-width: 100%;
+        min-width: 100%;
+      }
     #search_btn, #account, #account:visited  {
         background-color: #E8E9EB;
         height: 2vw;
@@ -54,14 +67,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    #search_icn {
-        -webkit-transform: rotate(-45deg); 
-        -o-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-        font-size: 1.5vw;
-        font-weight: bold;
-        opacity: 0.5;
     }
     .account {
         grid-column: 18 / 21;
@@ -82,14 +87,14 @@
     z-index: 5;
     grid-row: 2 / 3;
     border-style: solid none solid none;
-    background-color: #ffffff;
+    background-color: #6FB3B8;
     border-color: #BEBEBE;
     border-width: 2px;
     list-style: none;
     position: fixed;
-    top: 7vh;
+    top: 9vh;
     width: 100%;
-    height: 4vh;
+    height: 6vh;
     padding-top: 2px;
     display: flex;
     justify-content: center;
@@ -104,16 +109,21 @@
     }
     .f_btn {
         height: 4vh;
-        background-color: #ffffff;
+        background-color: #6FB3B8;
+        color: white;
         border: none;
         margin: auto;
-        font-size: 1vw;
+        font-size: 1.1vw;
         display: flex;
         justify-content: center;
         align-items: center;
+        transition-duration: 0.4s;
+        appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
     }
     .f_btn:hover {
-        background-color: #BEBEBE;
+        background-color: #388087;
     }
     #collapse {
         cursor: pointer;
