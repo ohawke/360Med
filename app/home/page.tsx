@@ -23,23 +23,6 @@ ChartJS.register(
   Legend
 );
 
-async function functest(e: any) {
-  if (document.getElementById(styles.search)) {
-    //let searchedFor = document.getElementById(styles.search).value;
-    let temp = await fetch('http://localhost:5050/cpt')
-    console.log(temp)
-  }
-}
-
-/*
-async function searchCPT(e: any) {
-  if (document.getElementById(styles.search)) {
-    let searchedFor = document.getElementById(styles.search).value;
-    let temp = await fetch('http://localhost:5050/cpt/search/search?=' + searchedFor)
-    console.log(temp)
-  }
-}
-*/
 
 export default function Home({
     searchParams,
@@ -72,25 +55,6 @@ export default function Home({
   const [showList1, setShowList1] = useState(false);
   const [showList2, setShowList2] = useState(false);
   const [showMap, setShowMap] = useState(false);
-
-  const reset = () => {
-    setShowList1(false);
-    setShowList2(false);
-  };
-  const [result, setResult] = useState<string | undefined>();
-  const search = () => {
-    const lowerCaseSearchContent = searchContent.toLowerCase();
-    //const [result, setResult] = useState<string | undefined>();
-    pullData(lowerCaseSearchContent).then(data => {
-      setResult(data);
-    });
-    return (
-      <div>
-        <button onClick={search}>Search</button>
-        {result && <div id="result">{result}</div>}
-      </div>
-    )
-  };
 
   const handleSelect = () => {
     let select = (document.getElementsByName("chart_type")[0] as HTMLSelectElement).selectedIndex;

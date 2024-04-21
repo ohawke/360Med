@@ -34,7 +34,7 @@ export default async function Map ({
   }, []);
 
   return (
-    <div>
+    <div style={{zoom: 0.5}}>
     <div>Medicare Physician Fee Schedule Amount:</div>
     <div id="label" />
     <ComposableMap
