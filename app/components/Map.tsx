@@ -36,7 +36,7 @@ export default async function Map ({
   }, [query]);
 
   if (items.length == 0) {
-    return <div>no results found</div>
+    return <div>Heat Map: No Results Found</div>
   }
 
   return (
