@@ -3,6 +3,23 @@ Junior Design Project for Team JID-3357
 
 Our project allows medical researchers to learn about project cost before embarking on a project by compiling data from various databases.
 
+# Release Notes:
+
+## v.1.0.0
+Published: 04/22/2024
+### What's new
+- New splash page after opening application
+- Improved look of filter bar when searching
+- Highlight search results for improved interpretability
+- Improved color scale of heatmap to adjust to every search term
+- Heatmap is now hoverable
+- More descriptive error codes
+  
+### Bug fixes
+- Fixed mongoDB connection issue caused by connect-disconnect every operation
+- Heatmap no longer turns black when searching for terms with no associated data
+- Fixed build commands
+
 ## v.0.4.0
 
 ### Features
