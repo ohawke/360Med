@@ -11,8 +11,10 @@ Our project allows medical researchers to learn about project cost before embark
 2. Ensure that you have Node.js and npm installed. Instructions on how to do so can be found [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 3. Install the required packages for a Next.js project using the following command:
    ``` npm install next@latest react@latest react-dom@latest ```
-4. Navigate to the directory in which the project is cloned. Run the project using the command ```npm start``, or run the project in developer mode using the command ```npm run dev```.
+4. Navigate to the directory in which the project is cloned. Run the project using the command ```npm start```, or run the project in developer mode using the command ```npm run dev```.
 5. Using any web browser, navigate to http://localhost:3000.
+
+To deploy to an Amazon EC2 instance, follow this [tutorial](https://dev.to/drsimplegraffiti/from-code-to-the-cloud-a-step-by-step-guide-to-deploying-your-nodejs-app-on-aws-ec2-4300).
 
 # Release Notes:
 
